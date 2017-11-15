@@ -29,6 +29,8 @@ public class Account {
     @OneToMany
     List<Category> categories;
 
+    private float total;
+
     public Account(User user, String name){
         // this();
         this.user = user;
@@ -63,6 +65,10 @@ public class Account {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public float getTotal() { return total; }
+
+    public void setTotal(float total) { this.total = total; }
 
     //public List<Transaction> transactions() { return transactions; }
 

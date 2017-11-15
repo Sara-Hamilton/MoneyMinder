@@ -19,8 +19,7 @@ public class Transaction {
     @GeneratedValue
     private int id;
 
-    // TODO create private transactionType type;
-    // create transactionType enum (deposit, withdrawal, transfer)
+    private TransactionType type;
 
     @ManyToOne
     @JoinColumn(name = "userId")
@@ -145,6 +144,14 @@ public class Transaction {
     public String getDescription() { return description; }
 
     public void setDescription(String description) { this.description = description; }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
+    }
 
     //public List<Account> getAccounts() { return accounts; }
 }
