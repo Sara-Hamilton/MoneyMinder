@@ -2,6 +2,7 @@ package com.example.MoneyMinder.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class User {
     private int id;
 
     @NotNull
+    //regex pattern prevents empty string but allows spaces within the string
+    @Pattern(regexp="(.|\\s)*\\S(.|\\s)*", message="Name must not be empty.")
     private String username;
 
     @NotNull
@@ -26,7 +29,7 @@ public class User {
     private String email;
 
     @NotNull
-    @Size(min=6, max=40)
+    @Size(min=6, message="Passwords must be at least six characters.")
     private String password;
 
     public User(String username, String email, String password) {

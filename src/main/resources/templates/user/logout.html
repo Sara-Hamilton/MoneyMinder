@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head">
+
+</head>
+
+<body>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<div class="container-fluid">
+    <h1 th:text="${title}"></h1>
+
+    <form method="post" style="max-width:600px;">
+        <input type="submit" class="btn btn-sm btn-primary" value="Logout"/>
+    </form>
+</div>
+
+</body>
+</html>

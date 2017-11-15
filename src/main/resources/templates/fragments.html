@@ -15,8 +15,9 @@
 <body>
 
 <nav th:fragment="navigation">
-    <a href="/">Hello</a> |
-    <a href="/goodbye">Goodbye</a>
+    <a href="/">Hello</a>
+    <a href="/goodbye">| Goodbye</a>
+    <a href="/user/logout" th:if="${user}!=null">| Logout</a>
 </nav>
 
 </body>
