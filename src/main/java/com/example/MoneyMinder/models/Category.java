@@ -10,7 +10,7 @@ import java.util.List;
 public class Category {
 
     @OneToMany
-    @JoinColumn(name = "category_id")
+   // @JoinColumn(name = "category_id")
     private List<Transaction> transactions = new ArrayList<>();
 
     @Id

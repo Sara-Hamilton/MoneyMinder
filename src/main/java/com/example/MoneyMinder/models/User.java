@@ -1,9 +1,6 @@
 package com.example.MoneyMinder.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
@@ -14,8 +11,8 @@ public class User {
     @OneToMany
     private List<Account> accounts;
 
-    //@OneToMany
-    //private List<Transaction> transactions;
+    @OneToMany
+    private List<Transaction> transactions;
 
     @Id
     @GeneratedValue
@@ -84,7 +81,6 @@ public class User {
         this.accounts = accounts;
     }
 
-    /*
     public List<Transaction> getTransactions() {
         return transactions;
     }
@@ -93,5 +89,4 @@ public class User {
         this.transactions = transactions;
     }
 
-    */
 }

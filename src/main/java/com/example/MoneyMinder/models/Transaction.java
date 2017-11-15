@@ -3,18 +3,17 @@ package com.example.MoneyMinder.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Transaction {
 
-    @ManyToOne
-    private Category category;
+    //@ManyToOne
+    //private Category category;
 
     // TODO fix this
-    @ManyToMany(mappedBy = "transactions")
-    @JoinColumn(name = "transaction_id")
-    private List<Account> accounts;
+    //@ManyToMany(mappedBy = "transactions")
+    //@JoinColumn(name = "transaction_id")
+    //private List<Account> accounts;
 
     @Id
     @GeneratedValue
@@ -22,6 +21,11 @@ public class Transaction {
 
     // TODO create private transactionType type;
     // create transactionType enum (deposit, withdrawal, transfer)
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    @NotNull
+    private User user;
 
     private String description;
 
@@ -31,8 +35,11 @@ public class Transaction {
     @NotNull
     private Date date;
 
-    @NotNull
-    private Account account;
+    //@NotNull
+    //private Account account;
+
+    //@NotNull
+    //private Category category;
 
     /*
     @NotNull
@@ -49,15 +56,12 @@ public class Transaction {
     private Category toCategory;
     */
 
-    @NotNull
-    private User user;
-
     public Transaction(float amount, Date date, Account account,
                        Category category, String description, User user){
         this.amount = amount;
         this.date = date;
-        this.account = account;
-        this.category = category;
+        //this.account = account;
+        //this.category = category;
         this.description = description;
         this.user = user;
     }
@@ -84,15 +88,13 @@ public class Transaction {
         this.date = date;
     }
 
-    public Account getAccount() {
-        return account;
-    }
+    /*public Account getAccount() { return account; }
 
     public void setAccount(Account account) {
         this.account = account;
     }
 
-    /*
+
     public Account getFromAccount() {
         return fromAccount;
     }
@@ -108,13 +110,13 @@ public class Transaction {
     public void setToAccount(Account toAccount) {
         this.toAccount = toAccount;
     }
-    */
+
 
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
 
-    /*
+
     public Category getFromCategory() {
         return fromCategory;
     }
@@ -144,5 +146,5 @@ public class Transaction {
 
     public void setDescription(String description) { this.description = description; }
 
-    public List<Account> getAccounts() { return accounts; }
+    //public List<Account> getAccounts() { return accounts; }
 }

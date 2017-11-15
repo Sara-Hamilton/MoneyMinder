@@ -9,9 +9,10 @@ import java.util.List;
 @Entity
 public class Account {
 
-    @ManyToMany
-    @JoinColumn(name = "account_id")
-    private List<Transaction> transactions;
+    //@ManyToMany
+    //@JoinColumn(name = "account_id")
+    //private List<Transaction> transactions;
+
 
     @Id
     @GeneratedValue
@@ -25,7 +26,9 @@ public class Account {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // List<Category> categories
+    @OneToMany
+    List<Category> categories;
+
     public Account(User user, String name){
         // this();
         this.user = user;
@@ -35,9 +38,11 @@ public class Account {
 
     public Account(){ }
 
+    /*
     public void addItem(Transaction item) {transactions.add(item);}
 
     public void removeItem(Transaction item) {transactions.remove(item);}
+    */
 
     public int getId() {
         return id;
@@ -59,7 +64,7 @@ public class Account {
         this.user = user;
     }
 
-    public List<Transaction> transactions() { return transactions; }
+    //public List<Transaction> transactions() { return transactions; }
 
     /*
     public List<Category> getCategories() {
