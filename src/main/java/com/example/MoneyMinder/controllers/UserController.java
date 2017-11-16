@@ -14,7 +14,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("user")
-@SessionAttributes("username")
+//@SessionAttributes("username")
 public class UserController {
 
     @Autowired
@@ -49,7 +49,7 @@ public class UserController {
         Iterable<User> users = userDao.findAll();
         for (User user : users) {
             if (user.getUsername().equals(username)) {
-                model.addAttribute("title", "Try again");
+                model.addAttribute("title", "Sign up for Money Minder");
                 model.addAttribute(newUser);
                 model.addAttribute("userErrorMessage", "That username is taken.");
                 return "user/register";
@@ -59,7 +59,7 @@ public class UserController {
         // check for errors
         // check that password and verify password match
         if (errors.hasErrors() || (!password.equals(verifyPassword))) {
-            model.addAttribute("title", "Try again");
+            model.addAttribute("title", "Sign up for Money Minder");
             model.addAttribute(newUser);
             if (!password.equals("") && !password.equals(verifyPassword)) {
                 model.addAttribute("errorMessage", "Passwords do not match.");
@@ -96,21 +96,24 @@ public class UserController {
             // String salt = user.getSalt();
             // String enteredPassword = HashPass.generateHash(salt + password);
 
-            // verify username and password match usernam and password pair in the database
+            // verify username and password match username and password pair in the database
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
-
                 // add user to session
                 request.getSession().setAttribute("user", user);
-
                 // save data to database
                 userDao.save(user);
-
                 model.addAttribute("user", user);
                 model.addAttribute("title", "Welcome test title - change me later");
-
-                return "/welcome";
-            } else {
-                model.addAttribute("title", "No user by that name or incorrect password!");
+                return "user/index";
+            } else if (!user.getUsername().equals(username)) {
+                model.addAttribute("title", "Login");
+                model.addAttribute("userErrorMessage", "Invalid username");
+                return "user/login";
+            } else if ((user.getUsername().equals(username) && !(user.getPassword().equals(password)))){
+                model.addAttribute("username",username);
+                model.addAttribute("title", "Login");
+                model.addAttribute("passwordErrorMessage", "Incorrect password");
+                return "user/login";
             }
         }
         return "user/index";
@@ -126,7 +129,7 @@ public class UserController {
             return "redirect:/MoneyMinder";
         } else {
             model.addAttribute("title", "Click here to Logout.");
-            return "user/logout";
+            return "redirect:/user/logout";
         }
     }
 
