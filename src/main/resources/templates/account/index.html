@@ -10,20 +10,29 @@
 <h1 th:text="${title}">Default Title</h1>
 
 <h1>Account index</h1>
-<h2>An app for people who want to sort and categorize their budget</h2>
-<p>under construction</p>
 <p>this page should allow you to create and edit accounts</p>
-<h1 th:text="|Welcome ${user.username}|">Default welcome</h1>
+<h1 th:text="|Hello ${user.username}|">Default welcome</h1>
 
 <p th:unless="${userAccounts} and ${userAccounts.size()}">No accounts yet</p>
 
-<p th:if="${userAccounts} and ${userAccounts.size()}" th:text="|${{user.username}}'s Accounts|"></p>
 
-<ul th:if="${userAccounts}" th:each="account : ${userAccounts}">
-    <li><a th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}">Account</a></li>
-    <!-- TODO make sure this formatting still works for dollar amounts greater than $10 -->
-    <li th:text="|$${#numbers.formatDecimal(account.total, 1,2)}|">Account</li>
-</ul>
+<div class="well">
+    <div class="row">
+        <div class="col-md-6" ><h4 th:text="|${{user.username}}'s Accounts|"></h4></div>
+        <div class="col-md-6"><h4 th:text="|Grand Total = ${{total}}|"></h4></div>
+    </div>
+</div>
+<table th:if="${userAccounts} and ${userAccounts.size()}" class="table">
+    <tr>
+        <th class="col-md-4">Account</th>
+        <th class="col-md-4">Total</th>
+    </tr>
+    <tr th:if="${userAccounts}" th:each="account : ${userAccounts}">
+        <td><a th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}"></a></td>
+        <!-- TODO make sure this formatting still works for dollar amounts greater than $10 -->
+        <td th:text="|$${#numbers.formatDecimal(account.total, 1,2)}|"></td>
+    </tr>
+</table>
 
 <a th:href="@{'/account/add'}">Add Account</a>
 
