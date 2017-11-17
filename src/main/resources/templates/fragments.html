@@ -32,6 +32,7 @@
 
                 <li><a href="/MoneyMinder">Home</a></li>
                 <li><a href="/JustinThyme/welcome-user">Dashboard</a></li>
+                <li th:if="${user}!=null"><a href="/category">Categories</a></li>
                 <li th:if="${user}!=null"><a href="/user/logout">Logout</a></li>
 
             </ul>

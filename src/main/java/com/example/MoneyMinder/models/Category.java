@@ -21,8 +21,13 @@ public class Category {
     @Size(min=2, max=45)
     private String name;
 
-    public Category(String name){
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Category(String name, User user){
         this.name = name;
+        this.user = user;
     }
 
     public Category() { }
