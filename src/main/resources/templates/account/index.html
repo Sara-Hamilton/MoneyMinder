@@ -15,5 +15,17 @@
 <p>this page should allow you to create and edit accounts</p>
 <h1 th:text="|Welcome ${user.username}|">Default welcome</h1>
 
+<p th:unless="${userAccounts} and ${userAccounts.size()}">No accounts yet</p>
+
+<p th:if="${userAccounts} and ${userAccounts.size()}" th:text="|${{user.username}}'s Accounts|"></p>
+
+<ul th:if="${userAccounts}" th:each="account : ${userAccounts}">
+    <li><a th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}">Account</a></li>
+    <!-- TODO make sure this formatting still works for dollar amounts greater than $10 -->
+    <li th:text="|$${#numbers.formatDecimal(account.total, 1,2)}|">Account</li>
+</ul>
+
+<a th:href="@{'/account/add'}">Add Account</a>
+
 </body>
 </html>

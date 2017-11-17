@@ -3,7 +3,7 @@ package com.example.MoneyMinder.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -19,9 +19,11 @@ public class Account {
     private int id;
 
     @NotNull
-    @Size(min=2, max=45)
+    //regex pattern prevents empty string but allows spaces within the string
+    @Pattern(regexp="(.|\\s)*\\S(.|\\s)*", message="Name must not be empty.")
     private String name;
 
+    // @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -70,15 +72,15 @@ public class Account {
 
     public void setTotal(float total) { this.total = total; }
 
-    //public List<Transaction> transactions() { return transactions; }
-
-    /*
-    public List<Category> getCategories() {
-        return categories;
-    }
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-    */
+    //public List<Transaction> transactions() { return transactions; }
+
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
 }

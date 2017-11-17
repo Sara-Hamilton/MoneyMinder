@@ -15,7 +15,14 @@
     <p>this page should allow you to create and edit accounts</p>
     <h1 th:text="|Welcome ${user.username}|">Default welcome</h1>
     <h1 th:text="|accounts ${user.accounts}|">Default welcome</h1>
+    <h1 th:text="|accounts ${userAccounts}|">Default welcome</h1>
+        <ul th:if="${userAccounts}" th:each="account : ${userAccounts}">
+            <li><a th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}">Account</a></li>
+        </ul>
+        <ul th:if="${accounts}" th:each="account : ${accounts}">
+            <li><a th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}">Account</a></li>
+        </ul>
     <a href="/account">Click here to create new accounts</a>
-
+    <p th:text="${user.id}"></p>
 </body>
 </html>

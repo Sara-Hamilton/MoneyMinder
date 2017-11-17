@@ -4,13 +4,13 @@
 
 <head th:replace="fragments :: head"></head>
 
-<body>
+<body class="container">
 
 <nav th:replace="fragments :: navigation"></nav>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
+        <div class="col-lg-5 col-lg-offset-0">
             <h1 th:text="${title}"></h1>
 
             <form method="post" th:object="${user}">

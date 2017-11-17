@@ -1,16 +1,22 @@
 package com.example.MoneyMinder.controllers;
 
+import com.example.MoneyMinder.models.Account;
 import com.example.MoneyMinder.models.User;
+import com.example.MoneyMinder.models.data.AccountDao;
 import com.example.MoneyMinder.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("user")
@@ -20,8 +26,13 @@ public class UserController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private AccountDao accountDao;
+
     @RequestMapping(value = "")
     public String index(Model model) {
+
+        // TODO change this - either get rid of it or have it direct to some sort of user page
 
         model.addAttribute("title", "Welcome test title");
         return "user/index";
@@ -74,8 +85,11 @@ public class UserController {
 
             model.addAttribute("user", newUser);
             request.getSession().setAttribute("user", newUser);
+            List<Account> userAccounts = accountDao.findByUserId(newUser.getId());
+            model.addAttribute("userAccounts", userAccounts);
+            model.addAttribute("title", "Welcome test title - change me later");
 
-            return "user/index";
+            return "account/index";
         }
     }
 
@@ -102,35 +116,38 @@ public class UserController {
                 request.getSession().setAttribute("user", user);
                 // save data to database
                 userDao.save(user);
+
+                List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
+                model.addAttribute("userAccounts", userAccounts);
                 model.addAttribute("user", user);
                 model.addAttribute("title", "Welcome test title - change me later");
-                return "user/index";
-            } else if (!user.getUsername().equals(username)) {
+                return "account/index";
+
+        } else {
+            model.addAttribute("title", "No user by that name or incorrect password!");
+        }
+        /*for (User user : users) {
+            // TODO fix the error messages here
+            if (!user.getUsername().equals(username) ||  ) {
                 model.addAttribute("title", "Login");
                 model.addAttribute("userErrorMessage", "Invalid username");
                 return "user/login";
-            } else if ((user.getUsername().equals(username) && !(user.getPassword().equals(password)))){
+            } else {
                 model.addAttribute("username",username);
                 model.addAttribute("title", "Login");
                 model.addAttribute("passwordErrorMessage", "Incorrect password");
                 return "user/login";
-            }
+            } */
         }
-        return "user/index";
+        return "user/login";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(Model model, HttpServletRequest request) {
+    public String logout(Model model) {
 
-        User aUser = (User) request.getSession().getAttribute("user");
-
-        if (aUser == null) {
-            model.addAttribute("title", "Welcome to Money Minder");
-            return "redirect:/MoneyMinder";
-        } else {
-            model.addAttribute("title", "Click here to Logout.");
-            return "redirect:/user/logout";
-        }
+            model.addAttribute("title", "Click here to Logout");
+            return "user/logout";
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
