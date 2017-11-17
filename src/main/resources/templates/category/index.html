@@ -8,12 +8,14 @@
 
 <p th:unless="${userCategories} and ${userCategories.size()}">No categories yet</p>
 
-<ul th:if="${userCategories}" th:each="category : ${userCategories}">
-    <li><a th:href="@{'/cheese/category/' + ${category.id}}" th:text="${category.name}">Menu</a></li>
-</ul>
+<div class="col-md-6">
+    <div class="list-group" th:if="${userCategories}" th:each="category : ${userCategories}">
+        <a class="list-group-item" th:href="@{'/cheese/category/' + ${category.id}}" th:text="${category.name}">Menu</a>
+    </div>
+        <a th:href="@{'/category/add'}" class="btn btn-sm btn-primary">Add Category</a>
+</div>
 
 
-<a th:href="@{'/category/add'}">Add Category</a>
 
 </body>
 </html>
