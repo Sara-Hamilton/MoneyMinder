@@ -26,6 +26,8 @@
                         <li th:if="${user}!=null"><a th:href="@{/MoneyMinder}">Home</a></li>
                         <li th:if="${user}!=null"><a th:href="@{/account}">Accounts</a></li>
                         <li th:if="${user}!=null"><a th:href="@{/category}">Categories</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
                         <li th:if="${user}!=null"><a th:href="@{/user/logout}">Logout</a></li>
                     </ul>
                 </div>
