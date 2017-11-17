@@ -69,7 +69,6 @@ public class AccountController {
             return "account/add";
         }
 
-        // model.addAttribute("accounts", accountDao.findAll());
         account.setUser(user);
 
         accountDao.save(account);

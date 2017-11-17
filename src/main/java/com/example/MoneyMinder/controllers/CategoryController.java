@@ -1,7 +1,9 @@
 package com.example.MoneyMinder.controllers;
 
 import com.example.MoneyMinder.models.Category;
+import com.example.MoneyMinder.models.User;
 import com.example.MoneyMinder.models.data.CategoryDao;
+import com.example.MoneyMinder.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,27 +12,40 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("category")
 public class CategoryController {
+
     @Autowired
     private CategoryDao categoryDao;
 
-    @RequestMapping(value = "")
-    public String index(Model model){
+    @Autowired
+    private UserDao userDao;
 
-        Iterable<Category> categories = categoryDao.findAll();
-        model.addAttribute("categories", categories);
-        model.addAttribute("title", "Categories");
+    @RequestMapping(value = "")
+    public String index(Model model, HttpServletRequest request){
+
+        User user = (User) request.getSession().getAttribute("user");
+        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        model.addAttribute("user", user);
+        model.addAttribute("userCategories", userCategories);
+        model.addAttribute("title", user.getUsername() + "'s Categories");
 
         return "category/index";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String displayAddCategoryForm(Model model) {
+    public String displayAddCategoryForm(Model model,HttpServletRequest request) {
 
+        User user = (User) request.getSession().getAttribute("user");
+        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+
+        model.addAttribute("user", user);
+        model.addAttribute("userCategories", userCategories);
         model.addAttribute(new Category());
         model.addAttribute("title", "Add Category");
 
@@ -39,14 +54,26 @@ public class CategoryController {
 
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddCategoryForm(Model model, @ModelAttribute
-    @Valid Category category, Errors errors) {
+    @Valid Category category, Errors errors, HttpServletRequest request) {
+
+        User user = (User) request.getSession().getAttribute("user");
+        model.addAttribute("user", user);
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Category");
             return "category/add";
         }
 
+        category.setUser(user);
+
         categoryDao.save(category);
+        userDao.save(user);
+
+        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+
+        model.addAttribute("userCategories", userCategories);
+
         return "redirect:";
     }
+
 }

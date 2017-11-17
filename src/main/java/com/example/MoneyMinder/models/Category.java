@@ -44,5 +44,9 @@ public class Category {
         this.name = name;
     }
 
+    public User getUser() { return user; }
+
+    public void setUser(User user) { this.user = user; }
+
     public List<Transaction> getTransactions() { return transactions; }
 }
