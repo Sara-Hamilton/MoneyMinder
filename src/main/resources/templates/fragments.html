@@ -18,27 +18,17 @@
     <div th:fragment="navigation" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-            <!--<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button> -->
-
                 <a class="navbar-brand" th:href="@{/MoneyMinder}">MoneyMinder</a>
             </div>
-
-        <!--<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-
-                    <li><a th:href="@{/MoneyMinder}">Home</a></li>
-                    <li><a th:href="@{/JustinThyme/welcome-user}">Dashboard</a></li>
-                    <li th:if="${user}!=null"><a th:href="@{/category}">Categories</a></li>
-                    <li th:if="${user}!=null"><a th:href="@{/user/logout}">Logout</a></li>
-
-                </ul>
-            </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li th:if="${user}!=null"><a th:href="@{/MoneyMinder}"></a></li>
+                        <li th:if="${user}!=null"><a th:href="@{/MoneyMinder}">Home</a></li>
+                        <li th:if="${user}!=null"><a th:href="@{/account}">Accounts</a></li>
+                        <li th:if="${user}!=null"><a th:href="@{/category}">Categories</a></li>
+                        <li th:if="${user}!=null"><a th:href="@{/user/logout}">Logout</a></li>
+                    </ul>
+                </div>
         </div>
     </div>
 
