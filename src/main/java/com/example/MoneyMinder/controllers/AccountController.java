@@ -36,7 +36,6 @@ public class AccountController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("user", user);
         model.addAttribute("title", "Welcome test title for account index");
@@ -48,7 +47,6 @@ public class AccountController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-
         model.addAttribute("user", user);
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("title", "Create New Account");
@@ -70,14 +68,10 @@ public class AccountController {
         }
 
         account.setUser(user);
-
         accountDao.save(account);
         userDao.save(user);
-
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-
         model.addAttribute("userAccounts", userAccounts);
-        // return "redirect:view/" + account.getId();
         return "account/index";
     }
 

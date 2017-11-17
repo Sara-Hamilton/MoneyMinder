@@ -43,7 +43,6 @@ public class CategoryController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserId(user.getId());
-
         model.addAttribute("user", user);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute(new Category());
@@ -65,12 +64,9 @@ public class CategoryController {
         }
 
         category.setUser(user);
-
         categoryDao.save(category);
         userDao.save(user);
-
         List<Category> userCategories = categoryDao.findByUserId(user.getId());
-
         model.addAttribute("userCategories", userCategories);
 
         return "redirect:";
