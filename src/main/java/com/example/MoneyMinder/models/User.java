@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,8 @@ public class User {
 
     @OneToMany
     private List<Transaction> transactions;
+
+    private BigDecimal userTotal;
 
     @Id
     @GeneratedValue
@@ -40,16 +43,6 @@ public class User {
 
     public User() {}
 
-    /*@Id
-    @GeneratedValue
-    private int userId;
-    private static int nextId = 1;
-
-    public User() {
-        userId = nextId;
-        nextId++;
-    } */
-
     public String getUsername() {
         return username;
     }
@@ -75,6 +68,10 @@ public class User {
     }
 
     public int getId() { return id; }
+
+    public BigDecimal getUserTotal() { return userTotal; }
+
+    public void setUserTotal(BigDecimal userTotal) { this.userTotal = userTotal; }
 
     public List<Account> getAccounts() {
         return accounts;

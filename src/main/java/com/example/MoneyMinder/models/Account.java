@@ -4,6 +4,7 @@ package com.example.MoneyMinder.models;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -31,7 +32,7 @@ public class Account {
     @OneToMany
     List<Category> categories;
 
-    private float total;
+    private BigDecimal total;
 
     public Account(User user, String name){
         // this();
@@ -68,9 +69,9 @@ public class Account {
         this.user = user;
     }
 
-    public float getTotal() { return total; }
+    public BigDecimal getTotal() { return total; }
 
-    public void setTotal(float total) { this.total = total; }
+    public void setTotal(BigDecimal total) { this.total = total; }
 
 
     public void setCategories(List<Category> categories) {
