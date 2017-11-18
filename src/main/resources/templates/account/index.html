@@ -15,11 +15,10 @@
 
 <p th:unless="${userAccounts} and ${userAccounts.size()}">No accounts yet</p>
 
-
 <div class="well">
     <div class="row">
         <div class="col-md-6" ><h4 th:text="|${{user.username}}'s Accounts|"></h4></div>
-        <div class="col-md-6"><h4 th:text="|Grand Total = ${{total}}|"></h4></div>
+        <div class="col-md-6"><h4 th:text="|Grand Total = $${{user.userTotal}}|"></h4></div>
     </div>
 </div>
 <table th:if="${userAccounts} and ${userAccounts.size()}" class="table">

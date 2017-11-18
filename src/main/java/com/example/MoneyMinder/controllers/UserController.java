@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -81,6 +82,7 @@ public class UserController {
             //hashes password before saving to User
             //newUser.setPassword(HashPass.generateHash(salt + password));
 
+            newUser.setUserTotal(BigDecimal.valueOf(0.00));
             userDao.save(newUser);
 
             model.addAttribute("user", newUser);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 
@@ -68,6 +69,7 @@ public class AccountController {
         }
 
         account.setUser(user);
+        account.setTotal(BigDecimal.valueOf(0.00));
         accountDao.save(account);
         userDao.save(user);
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
