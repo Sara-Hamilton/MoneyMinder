@@ -15,6 +15,8 @@
     <li th:text="${transaction.name}">Account items</li>
 </ul> -->
 
+<p th:if="${session.user}" th:utext="|Welcome ${session.user.username}|"></p>
+
 <p th:unless="${accounts} and ${accounts.size()}">No transactions yet</p>
 
 <ul th:each="account : ${accounts}">

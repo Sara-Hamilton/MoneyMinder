@@ -11,14 +11,14 @@
 
 <h1>Account index</h1>
 <p>this page should allow you to create and edit accounts</p>
-<h1 th:text="|Hello ${user.username}|">Default welcome</h1>
+<h1 th:if="${session.user}" th:text="|Hello ${session.user.username}|">Default welcome</h1>
 
 <p th:unless="${userAccounts} and ${userAccounts.size()}">No accounts yet</p>
 
 <div class="well">
     <div class="row">
-        <div class="col-md-6" ><h4 th:text="|${{user.username}}'s Accounts|"></h4></div>
-        <div class="col-md-6"><h4 th:text="|Grand Total = $${{user.userTotal}}|"></h4></div>
+        <div class="col-md-6" ><h4 th:text="|${{session.user.username}}'s Accounts|"></h4></div>
+        <div class="col-md-6"><h4 th:text="|Grand Total = $${{session.user.userTotal}}|"></h4></div>
     </div>
 </div>
 <table th:if="${userAccounts} and ${userAccounts.size()}" class="table">

@@ -12,6 +12,8 @@
 <h1>Welcome to MoneyMinder:</h1>
 <h2>An app for people who want to sort and categorize their budget</h2>
 <p>under construction</p>
+<p>Today is: <span th:text="${today}"></span></p>
+<p th:if="${session.user}" th:utext="|Welcome ${session.user.username}|"></p>
 
 <p th:if="${user}==null"><a href="user/register">Register for a new account</a></p>
 <p th:if="${user}==null"><a href="user/login">Login to an existing account</a></p>
