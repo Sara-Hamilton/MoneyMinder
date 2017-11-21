@@ -53,7 +53,7 @@ public class TransactionController {
     // @Transactional
     //@Temporal(TemporalType.DATE)
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public String processAddTransactionForm(Model model, @RequestParam (required = false) int categoryId, @RequestParam (required = false) int[]
+    public String processAddTransactionForm(Model model, @RequestParam (required = false) int categoryId, @RequestParam (required = false) int
             accountId, @RequestParam TransactionType type, @RequestParam BigDecimal amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                                             @RequestParam (required = false) String description, HttpServletRequest request) {
 
@@ -72,13 +72,18 @@ public class TransactionController {
             return "transaction/add";
         } */
 
-        //Category category = transaction.getCategory();
-        //Account account = transaction.getAccount();
-        //transaction.setUser(transaction.getUser());
-        //transaction.setAccount(account);
-        //transaction.setCategory(category);
-        //transactionDao.save(transaction);
-        //userDao.save(user);
+        Transaction transaction = new Transaction();
+        Category category = categoryDao.findOne(categoryId);
+        Account account = accountDao.findOne(accountId);
+        transaction.setUser(user);
+        transaction.setAccount(account);
+        transaction.setCategory(category);
+        transaction.setAmount(amount);
+        transaction.setType(type);
+        transaction.setDescription(description);
+        transaction.setDate(date);
+        transactionDao.save(transaction);
+        userDao.save(user);
         //List<Category> userCategories = categoryDao.findByUserId(user.getId());
         //model.addAttribute("userCategories", userCategories);
 
