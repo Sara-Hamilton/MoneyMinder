@@ -14,13 +14,13 @@
         <div class="col-lg-5 col-lg-offset-0">
             <h1 th:text="${title}"></h1>
 
-            <form method="post" >
+            <form method="post" th:object="${transaction}">
 
-                <input type="hidden" th:object="${user}" th:value="${session.user}" name="user" />
+                <input type="hidden" th:object="${user}" th:value="${{user.id}}" name="user" />
 
                 <div class="form-group">
                     <label th:for="type">Type</label>
-                    <select th:object="${type}" name="type">
+                    <select th:field="*{type}" name="type">
                         <option th:each="type : ${types}"
                                 th:text="${type}"
                                 th:value="${type}"></option>
@@ -30,14 +30,14 @@
 
                 <div class="form-group">
                     <label th:for="amount">Amount</label>
-                    <input class="form-control" name="amount" type="number" min="1" step="any"/>
+                    <input class="form-control" th:field="*{amount}" type="number" min="1" step="any"/>
                     <!-- <span th:errors="*{username}" class="text-danger"></span>
                     <span th:text="${userErrorMessage}" class="text-danger"></span> -->
                 </div>
 
                 <div class="form-group">
                     <label name="accountId">Account</label>
-                    <select th:object="${account}" name="accountId">
+                    <select th:field="*{account.id}" name="accountId">
                         <option th:each="account : ${userAccounts}"
                                 th:text="${account.name}"
                                 th:value="${account.id}"></option>
@@ -47,7 +47,7 @@
 
                 <div class="form-group">
                     <label name="categoryId">Category</label>
-                    <select th:object="${category}" name="categoryId">
+                    <select th:field="*{category.id}" name="categoryId">
                         <option th:each="category : ${userCategories}"
                                 th:text="${category.name}"
                                 th:value="${category.id}"></option>
@@ -62,13 +62,13 @@
                 </div> -->
                 <div class="form-group">
                     <label th:for="date">Date</label>
-                    <input class="form-control" th:value="${date}" name="date" type="date" />
+                    <input class="form-control" th:field="*{date}" name="date" type="date" />
                     <!--<span th:errors="*{email}" class="text-danger"></span>-->
                 </div>
 
                 <div class="form-group">
                     <label name="description">Description</label>
-                    <input class="form-control" th:value="${description}" name="description" type="text" />
+                    <input class="form-control" th:field="*{description}" name="description" type="text" />
                     <!-- <span th:errors="*{email}" class="text-danger"></span> -->
                 </div>
 

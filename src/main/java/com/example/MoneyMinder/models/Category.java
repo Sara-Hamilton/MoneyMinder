@@ -18,7 +18,7 @@ public class Category {
 
     @Id
     @GeneratedValue
-    public int id;
+    public Long id;
 
     @NotNull
     @Size(min=2, max=45)
@@ -35,7 +35,7 @@ public class Category {
 
     public Category() { }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

@@ -6,16 +6,16 @@ import com.example.MoneyMinder.models.data.CategoryDao;
 import com.example.MoneyMinder.models.data.TransactionDao;
 import com.example.MoneyMinder.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
-import java.util.Date;
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -50,17 +50,20 @@ public class TransactionController {
         return "transaction/add";
     }
 
-    // @Transactional
-    //@Temporal(TemporalType.DATE)
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public String processAddTransactionForm(Model model, @RequestParam (required = false) int categoryId, @RequestParam (required = false) int[]
-            accountId, @RequestParam TransactionType type, @RequestParam BigDecimal amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-                                            @RequestParam (required = false) String description, HttpServletRequest request) {
+    public String processAddTransactionForm(Model model, @ModelAttribute
+    @Valid Transaction transaction, Errors errors, @RequestParam (required = false) Long categoryId, @RequestParam (required = false) Long
+            accountId, HttpServletRequest request) {
+
+        // @RequestParam TransactionType type, @RequestParam BigDecimal amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+        //@RequestParam (required = false) String description,
+
+        //int acctId = accountId.intValue();
 
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
 
-        /*if (errors.hasErrors()) {
+        if (errors.hasErrors()) {
             List<Category> userCategories = categoryDao.findByUserId(user.getId());
             List<Account> userAccounts = accountDao.findByUserId(user.getId());
             model.addAttribute("user", user);
@@ -70,19 +73,21 @@ public class TransactionController {
             model.addAttribute(new Transaction());
             model.addAttribute("title", "Errors");
             return "transaction/add";
-        } */
+        }
 
-        //Category category = transaction.getCategory();
+        //Category category = categoryDao.findOne(Math.toIntExact(categoryId));
+        //Account account = accountDao.findOne(Math.toIntExact(accountId));
+
         //Account account = transaction.getAccount();
         //transaction.setUser(transaction.getUser());
         //transaction.setAccount(account);
         //transaction.setCategory(category);
-        //transactionDao.save(transaction);
-        //userDao.save(user);
+        transactionDao.save(transaction);
+        userDao.save(user);
         //List<Category> userCategories = categoryDao.findByUserId(user.getId());
         //model.addAttribute("userCategories", userCategories);
 
-        model.addAttribute("title", "Transaction Complete");
+        model.addAttribute("title", "Transaction Successful");
         return "transaction/transaction-confirmation";
     }
 }

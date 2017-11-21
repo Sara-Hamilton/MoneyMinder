@@ -22,13 +22,12 @@ public class Transaction {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     private TransactionType type;
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @NotNull
     private User user;
 
     private String description;
@@ -76,7 +75,7 @@ public class Transaction {
 
     public Transaction(){ }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
