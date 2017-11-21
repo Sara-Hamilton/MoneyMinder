@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -52,15 +51,16 @@ public class TransactionController {
 
     // @Transactional
     //@Temporal(TemporalType.DATE)
+    // @ModelAttribute @Valid Transaction transaction, Errors errors,
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddTransactionForm(Model model, @RequestParam (required = false) int categoryId, @RequestParam (required = false) int
-            accountId, @RequestParam TransactionType type, @RequestParam BigDecimal amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+            accountId, @RequestParam TransactionType type, @RequestParam Double amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                                             @RequestParam (required = false) String description, HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
 
-        /*if (errors.hasErrors()) {
+        /* if (errors.hasErrors()) {
             List<Category> userCategories = categoryDao.findByUserId(user.getId());
             List<Account> userAccounts = accountDao.findByUserId(user.getId());
             model.addAttribute("user", user);
@@ -69,6 +69,10 @@ public class TransactionController {
             model.addAttribute("types", TransactionType.values());
             model.addAttribute(new Transaction());
             model.addAttribute("title", "Errors");
+            return "transaction/add";
+        } */
+
+        /* if (date == Null || amount == Null) {
             return "transaction/add";
         } */
 
