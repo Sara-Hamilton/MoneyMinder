@@ -1,9 +1,14 @@
 package com.example.MoneyMinder.models;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
+@Transactional
 @Entity
 public class Transaction {
 
@@ -29,16 +34,20 @@ public class Transaction {
     private String description;
 
     @NotNull
-    private float amount;
+    private BigDecimal amount;
 
-    @NotNull
+    // @NotNull
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    //@NotNull
-    //private Account account;
+    @ManyToOne
+    @JoinColumn(name = "accountId")
+    // @NotNull
+    private Account account;
 
-    //@NotNull
-    //private Category category;
+    @ManyToOne
+    @JoinColumn(name = "categoryId")
+    private Category category;
 
     /*
     @NotNull
@@ -55,7 +64,7 @@ public class Transaction {
     private Category toCategory;
     */
 
-    public Transaction(float amount, Date date, Account account,
+    public Transaction(BigDecimal amount, Date date, Account account,
                        Category category, String description, User user){
         this.amount = amount;
         this.date = date;
@@ -71,11 +80,11 @@ public class Transaction {
         return id;
     }
 
-    public float getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 
@@ -87,14 +96,14 @@ public class Transaction {
         this.date = date;
     }
 
-    /*public Account getAccount() { return account; }
+    public Account getAccount() { return account; }
 
     public void setAccount(Account account) {
         this.account = account;
     }
 
 
-    public Account getFromAccount() {
+    /* public Account getFromAccount() {
         return fromAccount;
     }
 
@@ -109,13 +118,13 @@ public class Transaction {
     public void setToAccount(Account toAccount) {
         this.toAccount = toAccount;
     }
-
+    */
 
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
 
-
+    /*
     public Category getFromCategory() {
         return fromCategory;
     }

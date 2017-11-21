@@ -1,11 +1,14 @@
 package com.example.MoneyMinder.models;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Entity
 public class Category {
 

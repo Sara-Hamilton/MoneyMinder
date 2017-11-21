@@ -1,12 +1,15 @@
 package com.example.MoneyMinder.models;
 
 
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Transactional
 @Entity
 public class Account {
 
