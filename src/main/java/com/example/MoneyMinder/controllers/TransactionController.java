@@ -55,7 +55,7 @@ public class TransactionController {
                                             @RequestParam (required = false) String description, HttpServletRequest request) {
 
         // TODO configure transaction logic
-        
+
         User user = (User) request.getSession().getAttribute("user");
         //model.addAttribute("user", user);
         Transaction transaction = new Transaction();
