@@ -24,15 +24,20 @@ public class AccountData {
         return anAccount;
     }
 
+    //getTotal
+    //public static BigDecimal userGrandTotal(int id) {}
+
     //getByUserId
     /*public static Account getByUserId(int userId) {
         Account anAccount = null;
 
+        List<Account> userAccounts = null;
+
         for (Account someAccount : accounts) {
             if (someAccount.getUserId() == userId) {
-                anAccount = someAccount;
+                anAccount.put(userAccounts);
             }
         }
-        return anAccount;
+        return userAccounts;
     } */
 }

@@ -5,6 +5,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Transactional
@@ -33,7 +34,7 @@ public class Transaction {
     private String description;
 
     @NotNull
-    private Double amount;
+    private BigDecimal amount;
 
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -63,7 +64,7 @@ public class Transaction {
     private Category toCategory;
     */
 
-    public Transaction(Double amount, Date date, Account account,
+    public Transaction(BigDecimal amount, Date date, Account account,
                        Category category, String description, User user){
         this.amount = amount;
         this.date = date;
@@ -79,11 +80,11 @@ public class Transaction {
         return id;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 

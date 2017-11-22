@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -40,7 +41,6 @@ public class TransactionController {
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserId(user.getId());
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-        // model.addAttribute("user.accounts", user.getAccounts());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute("types", TransactionType.values());
@@ -54,15 +54,12 @@ public class TransactionController {
     public String processAddTransactionForm(Model model, @ModelAttribute @Valid Transaction transaction,
                                             Errors errors, @RequestParam int categoryId, @RequestParam int accountId,
                                             HttpServletRequest request) {
-        // TODO configure transaction logic
   
         User user = (User) request.getSession().getAttribute("user");
-        //model.addAttribute("user", user);
 
         if (errors.hasErrors()) {
             List<Category> userCategories = categoryDao.findByUserId(user.getId());
             List<Account> userAccounts = accountDao.findByUserId(user.getId());
-            //model.addAttribute("user", user);
             model.addAttribute("userAccounts", userAccounts);
             model.addAttribute("userCategories", userCategories);
             model.addAttribute("types", TransactionType.values());
@@ -77,6 +74,24 @@ public class TransactionController {
         transaction.setAccount(account);
         transaction.setCategory(category);
         transactionDao.save(transaction);
+
+        BigDecimal transactionAmount = transaction.getAmount();
+        BigDecimal total = account.getTotal();
+        BigDecimal userTotal = user.getUserTotal();
+
+        if (transaction.getType() == TransactionType.DEPOSIT) {
+            BigDecimal newTotal = total.add(transactionAmount);
+            account.setTotal(newTotal);
+            BigDecimal newUserTotal = userTotal.add(transactionAmount);
+            user.setUserTotal(newUserTotal);
+        } else if (transaction.getType() == TransactionType.WITHDRAWAL) {
+            BigDecimal newTotal = total.subtract(transactionAmount);
+            account.setTotal(newTotal);
+            BigDecimal newUserTotal = userTotal.subtract(transactionAmount);
+            user.setUserTotal(newUserTotal);
+        }
+
+        accountDao.save(account);
         userDao.save(user);
 
         model.addAttribute("title", "Transaction Successful");
