@@ -40,7 +40,7 @@ public class TransactionController {
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserId(user.getId());
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-        model.addAttribute("user.accounts", user.getAccounts());
+        // model.addAttribute("user.accounts", user.getAccounts());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute("types", TransactionType.values());
@@ -54,16 +54,15 @@ public class TransactionController {
     public String processAddTransactionForm(Model model, @ModelAttribute @Valid Transaction transaction,
                                             Errors errors, @RequestParam int categoryId, @RequestParam int accountId,
                                             HttpServletRequest request) {
-
         // TODO configure transaction logic
   
         User user = (User) request.getSession().getAttribute("user");
-        model.addAttribute("user", user);
+        //model.addAttribute("user", user);
 
         if (errors.hasErrors()) {
             List<Category> userCategories = categoryDao.findByUserId(user.getId());
             List<Account> userAccounts = accountDao.findByUserId(user.getId());
-            model.addAttribute("user", user);
+            //model.addAttribute("user", user);
             model.addAttribute("userAccounts", userAccounts);
             model.addAttribute("userCategories", userCategories);
             model.addAttribute("types", TransactionType.values());
@@ -78,6 +77,7 @@ public class TransactionController {
         transaction.setAccount(account);
         transaction.setCategory(category);
         transactionDao.save(transaction);
+        userDao.save(user);
 
         model.addAttribute("title", "Transaction Successful");
         return "transaction/transaction-confirmation";
