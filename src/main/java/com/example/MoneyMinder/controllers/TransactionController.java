@@ -51,8 +51,8 @@ public class TransactionController {
     }
 
     @RequestMapping(value="add", method = RequestMethod.POST)
-    public String processAddTransactionForm(Model model, @ModelAttribute
-    @Valid Transaction transaction, Errors errors, @RequestParam int categoryId, @RequestParam int accountId,
+    public String processAddTransactionForm(Model model, @ModelAttribute @Valid Transaction transaction,
+                                            Errors errors, @RequestParam int categoryId, @RequestParam int accountId,
                                             HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
