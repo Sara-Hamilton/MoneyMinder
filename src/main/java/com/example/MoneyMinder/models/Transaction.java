@@ -41,7 +41,7 @@ public class Transaction {
 
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accountId")
-    @NotNull
+    //@NotNull
     private Account account;
 
     @ManyToOne
