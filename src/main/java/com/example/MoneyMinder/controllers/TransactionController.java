@@ -55,6 +55,8 @@ public class TransactionController {
                                             Errors errors, @RequestParam int categoryId, @RequestParam int accountId,
                                             HttpServletRequest request) {
 
+        // TODO configure transaction logic
+  
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
 
