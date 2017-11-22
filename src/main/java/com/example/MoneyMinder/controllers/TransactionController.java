@@ -49,33 +49,15 @@ public class TransactionController {
         return "transaction/add";
     }
 
-    // @Transactional
-    //@Temporal(TemporalType.DATE)
-    // @ModelAttribute @Valid Transaction transaction, Errors errors,
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddTransactionForm(Model model, @RequestParam (required = false) int categoryId, @RequestParam (required = false) int
             accountId, @RequestParam TransactionType type, @RequestParam Double amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
                                             @RequestParam (required = false) String description, HttpServletRequest request) {
 
+        // TODO configure transaction logic
+        
         User user = (User) request.getSession().getAttribute("user");
-        model.addAttribute("user", user);
-
-        /* if (errors.hasErrors()) {
-            List<Category> userCategories = categoryDao.findByUserId(user.getId());
-            List<Account> userAccounts = accountDao.findByUserId(user.getId());
-            model.addAttribute("user", user);
-            model.addAttribute("userAccounts", userAccounts);
-            model.addAttribute("userCategories", userCategories);
-            model.addAttribute("types", TransactionType.values());
-            model.addAttribute(new Transaction());
-            model.addAttribute("title", "Errors");
-            return "transaction/add";
-        } */
-
-        /* if (date == Null || amount == Null) {
-            return "transaction/add";
-        } */
-
+        //model.addAttribute("user", user);
         Transaction transaction = new Transaction();
         Category category = categoryDao.findOne(categoryId);
         Account account = accountDao.findOne(accountId);
@@ -88,8 +70,6 @@ public class TransactionController {
         transaction.setDate(date);
         transactionDao.save(transaction);
         userDao.save(user);
-        //List<Category> userCategories = categoryDao.findByUserId(user.getId());
-        //model.addAttribute("userCategories", userCategories);
 
         model.addAttribute("title", "Transaction Complete");
         return "transaction/transaction-confirmation";
