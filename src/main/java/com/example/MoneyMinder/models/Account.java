@@ -86,5 +86,4 @@ public class Account {
     public List<Category> getCategories() {
         return categories;
     }
-
 }

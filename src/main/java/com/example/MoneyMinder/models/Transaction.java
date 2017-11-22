@@ -21,14 +21,13 @@ public class Transaction {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     @NotNull
     private TransactionType type;
 
     @ManyToOne
     @JoinColumn(name = "userId")
-    @NotNull
     private User user;
 
     private String description;
@@ -40,7 +39,7 @@ public class Transaction {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accountId")
     @NotNull
     private Account account;
@@ -68,15 +67,15 @@ public class Transaction {
                        Category category, String description, User user){
         this.amount = amount;
         this.date = date;
-        //this.account = account;
-        //this.category = category;
+        this.account = account;
+        this.category = category;
         this.description = description;
         this.user = user;
     }
 
     public Transaction(){ }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
