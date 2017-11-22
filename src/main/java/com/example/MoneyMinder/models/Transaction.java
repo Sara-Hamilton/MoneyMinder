@@ -39,7 +39,7 @@ public class Transaction {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "accountId")
     // @NotNull
     private Account account;
@@ -67,8 +67,8 @@ public class Transaction {
                        Category category, String description, User user){
         this.amount = amount;
         this.date = date;
-        //this.account = account;
-        //this.category = category;
+        this.account = account;
+        this.category = category;
         this.description = description;
         this.user = user;
     }
