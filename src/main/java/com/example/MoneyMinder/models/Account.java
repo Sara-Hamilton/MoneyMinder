@@ -20,7 +20,7 @@ public class Account {
 
     @Id
     @GeneratedValue
-    private Long id;
+    private int id;
 
     @NotNull
     //regex pattern prevents empty string but allows spaces within the string
@@ -52,7 +52,7 @@ public class Account {
     public void removeItem(Transaction item) {transactions.remove(item);}
     */
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 

@@ -39,9 +39,7 @@ public class TransactionController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserId(user.getId());
-        //List<Category> userCategories = user.getCategories();
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-        //model.addAttribute("user", user);
         model.addAttribute("user.accounts", user.getAccounts());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
@@ -54,13 +52,8 @@ public class TransactionController {
 
     @RequestMapping(value="add", method = RequestMethod.POST)
     public String processAddTransactionForm(Model model, @ModelAttribute
-    @Valid Transaction transaction, Errors errors, @RequestParam (required = false) Long categoryId, @RequestParam (required = false) Long
-            accountId, HttpServletRequest request) {
-
-        // @RequestParam TransactionType type, @RequestParam BigDecimal amount, @RequestParam (required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-        //@RequestParam (required = false) String description,
-
-        //int acctId = accountId.intValue();
+    @Valid Transaction transaction, Errors errors, @RequestParam int categoryId, @RequestParam int accountId,
+                                            HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
@@ -77,17 +70,12 @@ public class TransactionController {
             return "transaction/add";
         }
 
-        //Category category = categoryDao.findOne(Math.toIntExact(categoryId));
-        //Account account = accountDao.findOne(Math.toIntExact(accountId));
-
-        //Account account = transaction.getAccount();
-        //transaction.setUser(transaction.getUser());
-        //transaction.setAccount(account);
-        //transaction.setCategory(category);
+        Category category = categoryDao.findOne(categoryId);
+        Account account = accountDao.findOne(accountId);
+        transaction.setUser(user);
+        transaction.setAccount(account);
+        transaction.setCategory(category);
         transactionDao.save(transaction);
-        userDao.save(user);
-        //List<Category> userCategories = categoryDao.findByUserId(user.getId());
-        //model.addAttribute("userCategories", userCategories);
 
         model.addAttribute("title", "Transaction Successful");
         return "transaction/transaction-confirmation";
