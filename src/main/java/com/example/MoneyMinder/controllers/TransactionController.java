@@ -39,8 +39,10 @@ public class TransactionController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        //List<Category> userCategories = user.getCategories();
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-        model.addAttribute("user", user);
+        //model.addAttribute("user", user);
+        model.addAttribute("user.accounts", user.getAccounts());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute("types", TransactionType.values());
