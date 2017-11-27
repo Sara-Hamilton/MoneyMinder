@@ -4,6 +4,7 @@ import com.example.MoneyMinder.models.Account;
 import com.example.MoneyMinder.models.Transaction;
 import com.example.MoneyMinder.models.User;
 import com.example.MoneyMinder.models.data.AccountDao;
+import com.example.MoneyMinder.models.data.CategoryDao;
 import com.example.MoneyMinder.models.data.TransactionDao;
 import com.example.MoneyMinder.models.data.UserDao;
 import com.example.MoneyMinder.models.forms.AddTransactionForm;
@@ -25,6 +26,9 @@ public class AccountController {
 
     @Autowired
     private AccountDao accountDao;
+
+    @Autowired
+    private CategoryDao categoryDao;
 
     @Autowired
     private UserDao userDao;
@@ -81,8 +85,10 @@ public class AccountController {
     public String viewAccount(Model model, @PathVariable int accountId) {
 
         // TODO work on this once transactions are functioning
-        Account account = accountDao.findOne(accountId);
-        model.addAttribute("account", account);
+        model.addAttribute("account", accountDao.findOne(accountId));
+        model.addAttribute("transactionList", transactionDao.findByAccountIdOrderByIdDesc(accountId));
+        model.addAttribute("categories", categoryDao.findAll());
+        //model.addAttribute("categoryName", categoryDao.findOne(categoryId));
 
         return "account/view";
     }

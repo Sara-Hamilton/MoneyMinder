@@ -9,19 +9,37 @@
 
 <h1 th:text="${title}">Default Title</h1>
 
-<!-- <p th:unless="${account.transactions} and ${account.transactions.size()}">No cheeses yet</p>
+<p th:unless="${transactionList} and ${transactionList.size()}">No cheeses yet</p>
 
-<ul th:each="transaction : ${account.transactions}">
-    <li th:text="${transaction.name}">Account items</li>
+<!--<ul th:each="transaction : ${transactionList}">
+    <li th:text="${transaction.amount}">Account items</li>
 </ul> -->
+<h3 th:if="${session.user}" th:utext="|${account.name}'s Transactions|"></h3>
 
-<p th:if="${session.user}" th:utext="|Welcome ${session.user.username}|"></p>
+<p th:unless="${transactionList} and ${transactionList.size()}">No transactions yet</p>
 
-<p th:unless="${accounts} and ${accounts.size()}">No transactions yet</p>
-
-<ul th:each="account : ${accounts}">
-    <li th:text="${account.name}">Accounts</li>
-</ul>
+<table th:if="${transactionList} and ${transactionList.size()}" class="table table-striped table-bordered">
+    <tr>
+        <th class="col-md-1">Id</th>
+        <th class="col-md-1">Date</th>
+        <th class="col-md-1">Type</th>
+        <th class="col-md-4">Description</th>
+        <th class="col-md-2">Category</th>
+        <th class="col-md-2">Amount</th>
+        <th class="col-md-2">Total</th>
+    </tr>
+    <tr class="list-group" th:if="${transactionList}" th:each="transaction : ${transactionList}">
+        <td th:text="${{transaction.id}}"></td>
+        <td th:text="${{transaction.date}}"></td>
+        <td th:text="${{transaction.type}}"></td>
+        <td th:text="${{transaction.description}}"></td>
+        <td th:text="${{transaction.categoryName}}"></td>
+        <td th:if="${{transaction.type}} == DEPOSIT" th:text="|$${#numbers.formatDecimal(transaction.amount, 1,2)}|"></td>
+        <td th:if="${{transaction.type}} == WITHDRAWAL" th:text="|-$${#numbers.formatDecimal(transaction.amount, 1,2)}|"></td>
+        <!-- TODO make this a running total = amount + previous total -->
+        <td th:text="|$${#numbers.formatDecimal(transaction.amount, 1,2)}|"></td>
+    </tr>
+</table>
 
 <p><a th:href="'/account/add-item/' + ${account.id}" class="btn btn-sm btn-primary">Add transaction</a></p>
 

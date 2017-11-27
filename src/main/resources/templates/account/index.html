@@ -18,7 +18,8 @@
 <div class="well">
     <div class="row">
         <div class="col-md-6" ><h4 th:text="|${{session.user.username}}'s Accounts|"></h4></div>
-        <div class="col-md-6"><h4 th:text="|Grand Total = $${#numbers.formatDecimal(session.user.userTotal, 1,2)}|"></h4></div>
+        <div class="col-md-6"><h4 th:if="${{session.user.userTotal}} >= 0" th:text="|Grand Total = $${#numbers.formatDecimal(session.user.userTotal, 1,2)}|"></h4></div>
+        <div class="col-md-6"><h4 th:unless="${{session.user.userTotal}} >= 0" th:text="|Grand Total = -$${#numbers.formatDecimal(-session.user.userTotal, 1,2)}|"></h4></div>
     </div>
 </div>
 <table th:if="${userAccounts} and ${userAccounts.size()}" class="table">
@@ -28,8 +29,8 @@
     </tr>
     <tr class="list-group" th:if="${userAccounts}" th:each="account : ${userAccounts}">
         <td><a class="list-group-item" th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}"></a></td>
-        <!-- TODO make sure this formatting still works for dollar amounts greater than $10 -->
-        <td th:text="|$${#numbers.formatDecimal(account.total, 1,2)}|"></td>
+        <td th:if="${{account.total}} >= 0" th:text="|$${#numbers.formatDecimal(account.total, 1,2)}|"></td>
+        <td th:unless="${{account.total}} >= 0" th:text="|-$${#numbers.formatDecimal(-account.total, 1,2)}|"></td>
     </tr>
 </table>
 

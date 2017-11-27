@@ -49,6 +49,8 @@ public class Transaction {
     @JoinColumn(name = "categoryId")
     private Category category;
 
+    private String categoryName;
+
     /*
     @NotNull
     private Account fromAccount;
@@ -65,11 +67,12 @@ public class Transaction {
     */
 
     public Transaction(BigDecimal amount, Date date, Account account,
-                       Category category, String description, User user){
+                       Category category, String categoryName, String description, User user){
         this.amount = amount;
         this.date = date;
         this.account = account;
         this.category = category;
+        this.categoryName = categoryName;
         this.description = description;
         this.user = user;
     }
@@ -161,6 +164,16 @@ public class Transaction {
     public void setType(TransactionType type) {
         this.type = type;
     }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+    //public String getCategoryName() {return category.getName();}
 
     //public List<Account> getAccounts() { return accounts; }
 }

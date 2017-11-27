@@ -13,4 +13,5 @@ import java.util.List;
 public interface CategoryDao extends CrudRepository<Category, Integer> {
 
     List<Category> findByUserId (int user_id);
+
 }

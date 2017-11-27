@@ -73,6 +73,7 @@ public class TransactionController {
         transaction.setUser(user);
         transaction.setAccount(account);
         transaction.setCategory(category);
+        transaction.setCategoryName(category.getName());
         transactionDao.save(transaction);
 
         BigDecimal transactionAmount = transaction.getAmount();

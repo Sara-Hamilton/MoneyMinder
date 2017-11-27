@@ -13,5 +13,5 @@ public interface TransactionDao extends CrudRepository<Transaction, Integer>{
 
     List<Transaction> findByUserId (int user_id);
 
-
+    List<Transaction> findByAccountIdOrderByIdDesc(int accountId);
 }
