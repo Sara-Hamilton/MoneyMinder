@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<form method="post"  action="/account/edit" style="max-width:600px;" th:object="${account}">
+
+    <input type="hidden" th:value="${account.id}" name="accountId" />
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}" required="true" />
+        <span th:errors="*{name}" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="name">Minimum</label>
+        <p class="text-info">Optional: set a minimum value to maintain</p>
+        <input class="form-control" th:field="*{minimum}" type="number" min=".01" max="1000000" step="0.01" placeholder="0.00"  />
+    </div>
+
+    <div class="form-group">
+        <label th:for="name">Goal</label>
+        <p class="text-info">Optional: set a goal amount to achieve</p>
+        <input class="form-control" th:field="*{goal}" type="number" min=".01" max="1000000" step="0.01" placeholder="0.00" />
+    </div>
+
+    <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
+</form>
+
+</body>
+</html>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -89,6 +90,34 @@ public class AccountController {
         model.addAttribute("categories", categoryDao.findAll());
 
         return "account/view";
+    }
+
+    @RequestMapping(value = "edit/{accountId}", method = RequestMethod.GET)
+    public String displayAccountEditForm(Model model, @PathVariable int accountId) {
+
+        Account account = accountDao.findOne(accountId);
+
+        model.addAttribute("account", account);
+        model.addAttribute("title", "Edit Account " + account.getName());
+
+        return "account/edit";
+    }
+
+    @RequestMapping(value = "edit", method = {RequestMethod.POST})
+    public String processAccountEditForm(Model model, @ModelAttribute @Valid Account account, Errors errors,
+                                         @RequestParam int accountId, String name, BigDecimal minimum, BigDecimal goal) {
+
+        if(errors.hasErrors()) {
+            model.addAttribute("accountId", accountId);
+            model.addAttribute("title", "Edit Account " + account.getName());
+            return "account/edit";
+        }
+
+        accountDao.findOne(accountId).setName(name);
+        accountDao.findOne(accountId).setMinimum(minimum);
+        accountDao.findOne(accountId).setGoal(goal);
+
+        return "redirect:";
     }
 
 }
