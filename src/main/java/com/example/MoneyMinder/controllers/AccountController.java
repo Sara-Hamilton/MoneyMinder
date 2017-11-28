@@ -91,39 +91,4 @@ public class AccountController {
         return "account/view";
     }
 
-    /*
-    @RequestMapping(value = "add-transaction/{accountId}", method = RequestMethod.GET)
-    public String addTransaction(Model model, @PathVariable int accountId) {
-
-        // TODO work on this once transactions are functioning
-        Account account = accountDao.findOne(accountId);
-        AddTransactionForm form = new AddTransactionForm(account, transactionDao.findAll());
-
-        model.addAttribute("form", form);
-        model.addAttribute("title", "Add Transaction to Account: " + account.getName());
-
-        return "menu/add-item";
-    }
-
-    public String processAddTransactionForm(@ModelAttribute @Valid AddTransactionForm form, Errors errors,
-                                            @RequestParam int accountId, @RequestParam int transactionId, Model model) {
-
-        // TODO work on this once transactions are functioning
-        Account account = accountDao.findOne(accountId);
-        Transaction transaction = transactionDao.findOne(transactionId);
-        form = new AddTransactionForm(account, transactionDao.findAll());
-        // TODO implement cheeseOnMenu check if needed
-
-        if (errors.hasErrors()) {
-            model.addAttribute("account", account);
-            model.addAttribute("form", form);
-            model.addAttribute("title", "Add Transaction to Account: " + account.getName());
-            return "account/add-item";
-        } else {
-            // TODO account.addItem(transaction);
-            accountDao.save(account);
-            return "redirect:view/" + accountId;
-        }
-    } */
-
 }
