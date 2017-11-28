@@ -37,6 +37,10 @@ public class Account {
 
     private BigDecimal total;
 
+    private BigDecimal minimum;
+
+    private BigDecimal goal;
+
     public Account(User user, String name){
         // this();
         this.user = user;
@@ -76,6 +80,21 @@ public class Account {
 
     public void setTotal(BigDecimal total) { this.total = total; }
 
+    public BigDecimal getMinimum() {
+        return minimum;
+    }
+
+    public void setMinimum(BigDecimal minimum) {
+        this.minimum = minimum;
+    }
+
+    public BigDecimal getGoal() {
+        return goal;
+    }
+
+    public void setGoal(BigDecimal goal) {
+        this.goal = goal;
+    }
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
