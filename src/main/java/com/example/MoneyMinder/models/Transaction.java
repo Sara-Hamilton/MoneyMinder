@@ -36,6 +36,8 @@ public class Transaction {
     @NotNull
     private BigDecimal amount;
 
+    private BigDecimal previousTotal;
+
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
@@ -67,12 +69,11 @@ public class Transaction {
     */
 
     public Transaction(BigDecimal amount, Date date, Account account,
-                       Category category, String categoryName, String description, User user){
+                       Category category, String description, User user){
         this.amount = amount;
         this.date = date;
         this.account = account;
         this.category = category;
-        this.categoryName = categoryName;
         this.description = description;
         this.user = user;
     }
@@ -171,6 +172,14 @@ public class Transaction {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public BigDecimal getPreviousTotal() {
+        return previousTotal;
+    }
+
+    public void setPreviousTotal(BigDecimal previousTotal) {
+        this.previousTotal = previousTotal;
     }
 
     //public String getCategoryName() {return category.getName();}

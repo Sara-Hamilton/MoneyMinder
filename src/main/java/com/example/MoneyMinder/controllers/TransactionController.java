@@ -70,15 +70,17 @@ public class TransactionController {
 
         Category category = categoryDao.findOne(categoryId);
         Account account = accountDao.findOne(accountId);
-        transaction.setUser(user);
-        transaction.setAccount(account);
-        transaction.setCategory(category);
-        transaction.setCategoryName(category.getName());
-        transactionDao.save(transaction);
 
         BigDecimal transactionAmount = transaction.getAmount();
         BigDecimal total = account.getTotal();
         BigDecimal userTotal = user.getUserTotal();
+
+        transaction.setUser(user);
+        transaction.setAccount(account);
+        transaction.setCategory(category);
+        if(categoryId != 0) {transaction.setCategoryName(category.getName());}
+        transaction.setPreviousTotal(total);
+        transactionDao.save(transaction);
 
         if (transaction.getType() == TransactionType.DEPOSIT) {
             BigDecimal newTotal = total.add(transactionAmount);

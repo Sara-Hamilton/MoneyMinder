@@ -1,18 +1,19 @@
 package com.example.MoneyMinder.controllers;
 
 import com.example.MoneyMinder.models.Account;
-import com.example.MoneyMinder.models.Transaction;
 import com.example.MoneyMinder.models.User;
 import com.example.MoneyMinder.models.data.AccountDao;
 import com.example.MoneyMinder.models.data.CategoryDao;
 import com.example.MoneyMinder.models.data.TransactionDao;
 import com.example.MoneyMinder.models.data.UserDao;
-import com.example.MoneyMinder.models.forms.AddTransactionForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -56,7 +57,6 @@ public class AccountController {
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("title", "Create New Account");
         model.addAttribute(new Account());
-        // model.addAttribute("accounts", accountDao.findAll());
 
         return "account/add";
     }
@@ -84,15 +84,14 @@ public class AccountController {
     @RequestMapping(value = "view/{accountId}", method = RequestMethod.GET)
     public String viewAccount(Model model, @PathVariable int accountId) {
 
-        // TODO work on this once transactions are functioning
         model.addAttribute("account", accountDao.findOne(accountId));
         model.addAttribute("transactionList", transactionDao.findByAccountIdOrderByIdDesc(accountId));
         model.addAttribute("categories", categoryDao.findAll());
-        //model.addAttribute("categoryName", categoryDao.findOne(categoryId));
 
         return "account/view";
     }
 
+    /*
     @RequestMapping(value = "add-transaction/{accountId}", method = RequestMethod.GET)
     public String addTransaction(Model model, @PathVariable int accountId) {
 
@@ -125,6 +124,6 @@ public class AccountController {
             accountDao.save(account);
             return "redirect:view/" + accountId;
         }
-    }
+    } */
 
 }
