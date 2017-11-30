@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<h3 th:text="|Are you sure you want to permanently delete account ${account.name}?|"></h3>
+
+<span class="text-warning" th:text="${remainingBalanceMessage}"></span>
+
+<form method="post" action="/account/remove" style="max-width:600px;" th:object="${account}">
+
+    <input type="hidden" th:value="${account.id}" name="accountId" />
+
+    <input type="submit" class="btn btn-sm btn-danger" value="Delete Account" />
+
+</form>
+
+</body>
+</html>

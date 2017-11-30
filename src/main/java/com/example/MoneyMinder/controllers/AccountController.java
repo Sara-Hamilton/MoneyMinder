@@ -120,4 +120,36 @@ public class AccountController {
         return "redirect:";
     }
 
+    @RequestMapping(value = "remove/{accountId}", method = RequestMethod.GET)
+    public String displayRemoveAccountForm(Model model, @PathVariable int accountId) {
+
+        Account account = accountDao.findOne(accountId);
+
+        model.addAttribute("account", account);
+        model.addAttribute("title", "Delete Account " + account.getName());
+
+        return "account/remove";
+    }
+
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public String processRemoveAccountForm(Model model, @ModelAttribute @Valid Account account, Errors errors, @RequestParam int accountId,
+                                           HttpServletRequest request) {
+
+        Account acct = accountDao.findOne(accountId);
+        BigDecimal x = BigDecimal.valueOf(0.00);
+
+        if(x.compareTo(acct.getTotal()) != 0) {
+            model.addAttribute("account", acct);
+            model.addAttribute("remainingBalanceMessage", "Only accounts with a balance of $0.00 can be deleted.");
+
+            return "account/remove";
+        } else { accountDao.delete(acct);
+
+            User user = (User) request.getSession().getAttribute("user");
+            List<Account> userAccounts = accountDao.findByUserId(user.getId());
+            model.addAttribute("userAccounts", userAccounts);
+
+        return "account/index"; }
+        // return "redirect:";
+    }
 }
