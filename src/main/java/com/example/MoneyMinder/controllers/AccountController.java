@@ -138,8 +138,8 @@ public class AccountController {
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveAccountForm(Model model, @RequestParam int accountId) {
 
-        Account acct = accountDao.findOne(accountId);
-        accountDao.delete(acct);
+        Account account = accountDao.findOne(accountId);
+        accountDao.delete(account);
 
         return "redirect:";
     }
