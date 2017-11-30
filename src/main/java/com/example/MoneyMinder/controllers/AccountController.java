@@ -136,8 +136,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveAccountForm(Model model, @ModelAttribute @Valid Account account, Errors errors, @RequestParam int accountId,
-                                           HttpServletRequest request) {
+    public String processRemoveAccountForm(Model model, @RequestParam int accountId) {
 
         Account acct = accountDao.findOne(accountId);
         accountDao.delete(acct);
