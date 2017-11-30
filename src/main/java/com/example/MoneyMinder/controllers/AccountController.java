@@ -96,9 +96,12 @@ public class AccountController {
     public String displayAccountEditForm(Model model, @PathVariable int accountId) {
 
         Account account = accountDao.findOne(accountId);
+        BigDecimal x = BigDecimal.valueOf(0.00);
+        int balance = x.compareTo(account.getTotal());
 
-        model.addAttribute("account", account);
+        model.addAttribute("account", accountDao.findOne(accountId));
         model.addAttribute("title", "Edit Account " + account.getName());
+        model.addAttribute("balance", balance);
 
         return "account/edit";
     }
@@ -109,13 +112,14 @@ public class AccountController {
 
         if(errors.hasErrors()) {
             model.addAttribute("accountId", accountId);
-            model.addAttribute("title", "Edit Account " + account.getName());
+            model.addAttribute("title", "Errors " + account.getName());
             return "account/edit";
         }
 
         accountDao.findOne(accountId).setName(name);
         accountDao.findOne(accountId).setMinimum(minimum);
         accountDao.findOne(accountId).setGoal(goal);
+        accountDao.save(accountDao.findOne(accountId));
 
         return "redirect:";
     }
@@ -126,7 +130,7 @@ public class AccountController {
         Account account = accountDao.findOne(accountId);
 
         model.addAttribute("account", account);
-        model.addAttribute("title", "Delete Account " + account.getName());
+        model.addAttribute("title", "Delete Account");
 
         return "account/remove";
     }
@@ -136,20 +140,8 @@ public class AccountController {
                                            HttpServletRequest request) {
 
         Account acct = accountDao.findOne(accountId);
-        BigDecimal x = BigDecimal.valueOf(0.00);
+        accountDao.delete(acct);
 
-        if(x.compareTo(acct.getTotal()) != 0) {
-            model.addAttribute("account", acct);
-            model.addAttribute("remainingBalanceMessage", "Only accounts with a balance of $0.00 can be deleted.");
-
-            return "account/remove";
-        } else { accountDao.delete(acct);
-
-            User user = (User) request.getSession().getAttribute("user");
-            List<Account> userAccounts = accountDao.findByUserId(user.getId());
-            model.addAttribute("userAccounts", userAccounts);
-
-        return "account/index"; }
-        // return "redirect:";
+        return "redirect:";
     }
 }
