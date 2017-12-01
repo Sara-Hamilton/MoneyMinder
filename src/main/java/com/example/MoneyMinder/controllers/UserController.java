@@ -127,20 +127,19 @@ public class UserController {
                 return "account/index";
 
         } else {
-            model.addAttribute("title", "No user by that name or incorrect password!");
-        }
-        /*for (User user : users) {
-            // TODO fix the error messages here
-            if (!user.getUsername().equals(username) ||  ) {
-                model.addAttribute("title", "Login");
-                model.addAttribute("userErrorMessage", "Invalid username");
-                return "user/login";
-            } else {
-                model.addAttribute("username",username);
-                model.addAttribute("title", "Login");
-                model.addAttribute("passwordErrorMessage", "Incorrect password");
-                return "user/login";
-            } */
+                int userExists = 0;
+                for (User user1 : users)
+                    if ( user1.getUsername().equals(username)){
+                        userExists += 1;
+                    }
+                if (userExists == 0){
+                    model.addAttribute("title", "Login");
+                    model.addAttribute("userErrorMessage", "Invalid Username");
+                    return "user/login";
+                }
+            }
+            model.addAttribute("title", "Login");
+            model.addAttribute("passwordErrorMessage", "Invalid Password");
         }
         return "user/login";
     }
