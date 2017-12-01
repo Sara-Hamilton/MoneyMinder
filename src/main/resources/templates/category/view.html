@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<h3 th:if="${session.user}" th:utext="|${account.name}'s Transactions|"></h3>
+
+<p th:unless="${transactionList} and ${transactionList.size()}">No transactions yet</p>
+
+<p><a th:href="@{/transaction/add}" class="btn btn-sm btn-primary">Add transaction</a>
+    <a th:href="@{'/account/edit/' + ${account.id}}" class="btn btn-sm btn-primary">Edit Account</a></p>
+
+<table th:if="${transactionList} and ${transactionList.size()}" class="table table-striped table-bordered">
+    <tr>
+        <!-- <th class="col-md-1">Id</th> -->
+        <th class="col-md-1">Date</th>
+        <th class="col-md-1">Type</th>
+        <th class="col-md-4">Description</th>
+        <th class="col-md-2">Category</th>
+        <th class="col-md-2">Transaction Amount</th>
+        <th class="col-md-2">Account Total</th>
+    </tr>
+    <tr class="list-group" th:if="${transactionList}" th:each="transaction : ${transactionList}">
+        <!-- <td th:text="${{transaction.id}}"></td> -->
+        <td th:text="${{transaction.date}}"></td>
+        <td th:text="${{transaction.type}}"></td>
+        <td th:text="${{transaction.description}}"></td>
+        <td th:text="${{transaction.categoryName}}"><a class="list-group-item" th:text="${{transaction.categoryName}}"></a></td>
+        <td> <!-- amount -->
+            <strong th:if="${{transaction.type}} == DEPOSIT" th:text="|$${#numbers.formatDecimal(transaction.amount,  1, 'COMMA', 2, 'POINT')}|"></strong>
+            <strong th:if="${{transaction.type}} == WITHDRAWAL" th:text="|-$${#numbers.formatDecimal(transaction.amount, 1, 'COMMA', 2, 'POINT')}|"></strong>
+        </td>
+        <!-- must use th:if > 0 for conditionals to work properly and th:if !( > 0) for values < 0 -->
+        <td> <!-- total-->
+            <span th:if="(${{transaction.type}} == WITHDRAWAL) and (${{transaction.previousTotal - transaction.amount}} > 0)" th:text="|$${#numbers.formatDecimal((transaction.previousTotal - transaction.amount),  1, 'COMMA', 2, 'POINT')}|">10.00</span>
+            <span th:if="(${{transaction.type}} == WITHDRAWAL) and !(${{transaction.previousTotal - transaction.amount}} > 0)" th:text="|-$${#numbers.formatDecimal(-(transaction.previousTotal - transaction.amount), 1, 'COMMA', 2, 'POINT')}"></span>
+            <span th:if="(${{transaction.type}} == DEPOSIT) and (${{transaction.previousTotal - transaction.amount}} > 0)" th:text="|$${#numbers.formatDecimal((transaction.previousTotal + transaction.amount),  1, 'COMMA', 2, 'POINT')}|">10.00</span>
+            <span th:if="(${{transaction.type}} == DEPOSIT) and !(${{transaction.previousTotal - transaction.amount}} > 0)" th:text="|$${#numbers.formatDecimal((transaction.previousTotal + transaction.amount), 1, 'COMMA', 2, 'POINT')}|"></span>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

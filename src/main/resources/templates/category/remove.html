@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+
+<head th:replace="fragments :: head"></head>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<body class="container">
+
+<h1 th:text="${title}">Default Title</h1>
+
+<h3 th:text="|Are you sure you want to permanently delete category ${category.name}?|"></h3>
+
+<form method="post" action="/category/remove" style="max-width:600px;" th:object="${category}">
+
+    <input type="hidden" th:value="${category.id}" name="categoryId" />
+
+    <input type="submit" class="btn btn-sm btn-danger" value="Delete Category" />
+
+</form>
+
+</body>
+</html>
