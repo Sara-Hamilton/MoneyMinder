@@ -24,7 +24,6 @@ public class Transaction {
     @GeneratedValue
     private Long id;
 
-    @NotNull
     private TransactionType type;
 
     @ManyToOne
@@ -33,7 +32,7 @@ public class Transaction {
 
     private String description;
 
-    @NotNull
+    // @NotNull
     private BigDecimal amount;
 
     private BigDecimal previousTotal;

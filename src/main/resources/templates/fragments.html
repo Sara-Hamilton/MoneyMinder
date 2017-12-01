@@ -23,10 +23,10 @@
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li th:if="${session.user}"><a th:href="@{/MoneyMinder}"></a></li>
-                        <li th:if="${session.user}"><a th:href="@{/MoneyMinder}">Home</a></li>
                         <li th:if="${session.user}"><a th:href="@{/account}">Accounts</a></li>
                         <li th:if="${session.user}"><a th:href="@{/category}">Categories</a></li>
                         <li th:if="${session.user}"><a th:href="@{/transaction/add}">Transaction</a></li>
+                        <li th:if="${session.user}"><a th:href="@{/transaction/transfer}">Transfer</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li th:if="${session.user}"><a th:href="@{/user/logout}">Logout</a></li>
