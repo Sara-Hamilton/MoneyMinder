@@ -98,7 +98,6 @@ public class CategoryController {
     public String processCategoryEditForm(Model model, @ModelAttribute @Valid Category category, Errors errors,
                                          @RequestParam int categoryId, String name) {
 
-
         if(errors.hasErrors()) {
             model.addAttribute("categoryId", categoryId);
             model.addAttribute("title", "Errors " + category.getName());
