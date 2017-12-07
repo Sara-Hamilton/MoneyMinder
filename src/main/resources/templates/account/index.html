@@ -26,9 +26,11 @@
 <a th:href="@{'/account/add'}" class="btn btn-sm btn-primary">Add Account</a>
 <a th:href="@{'/transaction/add'}" class="btn btn-sm btn-primary">Add Transaction</a>
 <a th:href="@{'/transaction/transfer'}" class="btn btn-sm btn-primary">Transfer Between Accounts</a>
+<a th:unless="${session.user.hideMinAndGoal}" th:href="@{'/user/hideMinAndGoal'}" class="btn btn-sm btn-primary pull-right">Hide Min and Goal</a>
+<a th:if="${session.user.hideMinAndGoal}" th:href="@{'/user/hideMinAndGoal'}" class="btn btn-sm btn-primary pull-right">Show Min and Goal</a>
 <p></p>
 
-<div class="table-responsive">
+<!-- <div class="table-responsive">
     <table th:if="${userAccounts} and ${userAccounts.size()}" class="table">
         <tr>
             <th class="col-md-6">Account</th>
@@ -37,53 +39,55 @@
             <th class="col-md-2">Total</th>
         </tr>
         <tr class="list-group" th:if="${userAccounts}" th:each="account : ${userAccounts}">
-            <td> <!-- account name -->
+            <td>
                 <a class="list-group-item" th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}"></a>
             </td>
-            <td> <!-- account minimum -->
+            <td>
                 <span th:if="${{account.minimum}} != NULL and (${{account.total}} >= ${{account.minimum}})" th:text="|$${#numbers.formatDecimal(account.minimum, 1, 'COMMA', 2, 'POINT')}|"></span>
                 <span th:if="(${{account.minimum}} != NULL) and !(${{account.total}} >= ${{account.minimum}})" th:text="|$${#numbers.formatDecimal(account.minimum, 1, 'COMMA', 2, 'POINT')}|" class="alert alert-danger"></span>
             </td>
-            <td> <!-- account goal -->
+            <td>
                 <span th:if="${{account.goal}} != NULL and !(${{account.total}} >= ${{account.goal}})" th:text="|$${#numbers.formatDecimal(account.goal, 1, 'COMMA', 2, 'POINT')}|"></span>
                 <span th:if="${{account.goal}} != NULL and (${{account.total}} >= ${{account.goal}})" th:text="|$${#numbers.formatDecimal(account.goal, 1, 'COMMA', 2, 'POINT')}|" class="alert alert-success"></span>
             </td>
-            <td> <!-- account total -->
+            <td>
                 <strong th:if="${{account.total}} >= 0" th:text="|$${#numbers.formatDecimal(account.total, 1, 'COMMA', 2, 'POINT')}|" ></strong>
                 <strong th:if="!(${{account.total}} >= 0)" th:text="|-$${#numbers.formatDecimal(-account.total, 1, 'COMMA', 2, 'POINT')}|" class="text-danger"></strong>
             </td>
         </tr>
     </table>
-</div>
+</div> -->
 
 
-<!-- <div class="table-responsive">
+<div class="table-responsive">
 <table th:if="${userAccounts} and ${userAccounts.size()}" class="table">
     <tr>
         <th class="col-md-5">Account</th>
         <th class="col-md-2">Total</th>
         <th class="col-md-1"></th>
-        <th class="col-md-1">Min</th>
-        <th class="col-md-1">Goal</th>
+        <th th:unless="${session.user.hideMinAndGoal}" class="col-md-1">Min</th>
+        <th th:unless="${session.user.hideMinAndGoal}" class="col-md-1">Goal</th>
     </tr>
     <tr class="list-group" th:if="${userAccounts}" th:each="account : ${userAccounts}">
-        <td><a class="list-group-item" th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}"></a></td>
-        <td>
+        <td> <!-- account name -->
+            <a class="list-group-item" th:href="@{'/account/view/' + ${account.id}}" th:text="${{account.name}}"></a>
+        </td>
+        <td> <!-- account total -->
             <strong th:if="${{account.total}} >= 0" th:text="|$${#numbers.formatDecimal(account.total, 1, 'COMMA', 2, 'POINT')}|" ></strong>
             <strong th:if="!(${{account.total}} >= 0)" th:text="|-$${#numbers.formatDecimal(-account.total, 1, 'COMMA', 2, 'POINT')}|"></strong>
         </td>
         <td></td>
-        <td>
-            <span th:if="${{account.minimum}} != NULL and (${{account.total}} >= ${{account.minimum}})" th:text="|$${#numbers.formatDecimal(account.minimum, 1, 'COMMA', 2, 'POINT')}|"></span>
-            <span th:if="(${{account.minimum}} != NULL) and !(${{account.total}} >= ${{account.minimum}})" th:text="|$${#numbers.formatDecimal(account.minimum, 1, 'COMMA', 2, 'POINT')}|" class="alert alert-danger"></span>
+        <td> <!-- account minimum -->
+            <span th:unless="${session.user.hideMinAndGoal}" th:if="${{account.minimum}} != NULL and (${{account.total}} >= ${{account.minimum}})" th:text="|$${#numbers.formatDecimal(account.minimum, 1, 'COMMA', 2, 'POINT')}|"></span>
+            <span th:unless="${session.user.hideMinAndGoal}" th:if="(${{account.minimum}} != NULL) and !(${{account.total}} >= ${{account.minimum}})" th:text="|$${#numbers.formatDecimal(account.minimum, 1, 'COMMA', 2, 'POINT')}|" class="alert alert-danger"></span>
         </td >
-        <td>
-            <span th:if="${{account.goal}} != NULL and !(${{account.total}} >= ${{account.goal}})" th:text="|$${#numbers.formatDecimal(account.goal, 1, 'COMMA', 2, 'POINT')}|"></span>
-            <span th:if="${{account.goal}} != NULL and (${{account.total}} >= ${{account.goal}})" th:text="|$${#numbers.formatDecimal(account.goal, 1, 'COMMA', 2, 'POINT')}|" class="alert alert-success"></span>
+        <td> <!-- account goal -->
+            <span th:unless="${session.user.hideMinAndGoal}" th:if="${{account.goal}} != NULL and !(${{account.total}} >= ${{account.goal}})" th:text="|$${#numbers.formatDecimal(account.goal, 1, 'COMMA', 2, 'POINT')}|"></span>
+            <span th:unless="${session.user.hideMinAndGoal}" th:if="${{account.goal}} != NULL and (${{account.total}} >= ${{account.goal}})" th:text="|$${#numbers.formatDecimal(account.goal, 1, 'COMMA', 2, 'POINT')}|" class="alert alert-success"></span>
         </td>
     </tr>
 </table>
-</div> -->
+</div>
 
 </body>
 </html>

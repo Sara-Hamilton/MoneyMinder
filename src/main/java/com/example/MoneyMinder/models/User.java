@@ -16,6 +16,8 @@ public class User {
     @OneToMany
     private List<Account> accounts;
 
+    private boolean hideMinAndGoal;
+
     @OneToMany
     private List<Transaction> transactions;
 
@@ -101,5 +103,13 @@ public class User {
 
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+
+    public boolean isHideMinAndGoal() {
+        return hideMinAndGoal;
+    }
+
+    public void setHideMinAndGoal(boolean hideMinAndGoal) {
+        this.hideMinAndGoal = hideMinAndGoal;
     }
 }

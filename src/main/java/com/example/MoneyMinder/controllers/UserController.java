@@ -160,4 +160,26 @@ public class UserController {
 
         return "user/logout-confirmation";
     }
+
+    @RequestMapping(value = "/hideMinAndGoal", method = RequestMethod.GET)
+    public String hideMinAndGoal(Model model, HttpServletRequest request) {
+
+        User user = (User) request.getSession().getAttribute("user");
+        boolean currentMinAndGoal = user.isHideMinAndGoal();
+        if (currentMinAndGoal){
+            user.setHideMinAndGoal(false);
+        } else {user.setHideMinAndGoal(true);
+        }
+
+        userDao.save(user);
+
+        model.addAttribute("user", user);
+        List<Account> userAccounts = accountDao.findByUserId(user.getId());
+        model.addAttribute("userAccounts", userAccounts);
+        model.addAttribute("user", user);
+        model.addAttribute("hideMinAndGoal", user.isHideMinAndGoal());
+        model.addAttribute("title", "Welcome test title - change me later");
+
+        return "account/index";
+    }
 }
