@@ -13,8 +13,8 @@
 <h2>An app for people who want to sort and categorize their budget</h2>
 <h1 th:if="${session.user}" th:utext="|Welcome ${session.user.username}|"></h1>
 
-<p th:if="${user}==null"><a href="user/register">Register for a new account</a></p>
-<p th:if="${user}==null"><a href="user/login">Login to an existing account</a></p>
+<p th:if="${user}==null"><a href="user/register" class="btn btn-sm btn-primary">Register for a new account</a></p>
+<p th:if="${user}==null"><a href="user/login" class="btn btn-sm btn-primary">Login to an existing account</a></p>
 
 
 </body>
