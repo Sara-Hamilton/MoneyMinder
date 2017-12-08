@@ -12,19 +12,16 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-.btn-primary, .btn, .btn:active, .btn-primary:active {
+.btn-default, .btn-primary, .btn, .btn-default:active, .btn:active, .btn-primary:active, .btn.btn-primary.btn-sm:active,
+.btn-default:focus, .btn:focus, .btn-primary:focus, .btn.btn-primary.btn-sm:focus{
     background-color: #589696;
     border-color: #589696;
 }
 
 .btn-primary:hover, .btn:hover {
-    background-color: #75acb7;
-    border-color: #75acb7;
-}
-
-.btn.btn-primary.btn-sm:active {
     background-color: #589696;
     border-color: #589696;
+    opacity: 0.7;
 }
 
 .navbar {

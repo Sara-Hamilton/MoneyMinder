@@ -21,7 +21,7 @@
     <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
     <span th:if="${usedCategory} == false"><a th:href="@{'/category/remove/' + ${category.id}}" class="btn btn-sm btn-danger" value="Delete Category" >Delete Category</a></span>
     <span th:if="${usedCategory} == true"><a th:href="@{'/category/remove/' + ${category.id}}" class="btn btn-sm btn-danger disabled" value="Delete Category" >Delete Category</a></span>
-    <span th:if="${usedCategory} == true" class="text-warning">Only categories that are not tied to transactions may be deleted.</span>
+    <span th:if="${usedCategory} == true" class="text-muted">Only categories that are not tied to transactions may be deleted.</span>
 
 </form>
 
