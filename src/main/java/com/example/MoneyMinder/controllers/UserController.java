@@ -105,7 +105,7 @@ public class UserController {
         Iterable<User> users = userDao.findAll();
 
         for (User user : users) {
-            
+
             String salt = user.getSalt();
             String enteredPassword = HashPass.generateHash(salt + password);
 
