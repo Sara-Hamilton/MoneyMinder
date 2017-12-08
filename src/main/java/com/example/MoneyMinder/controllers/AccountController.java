@@ -41,7 +41,7 @@ public class AccountController {
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("user", user);
-        model.addAttribute("title", "Welcome test title for account index");
+        model.addAttribute("title", "Hello " + user.getUsername());
         return "account/index";
     }
 

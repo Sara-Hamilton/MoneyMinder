@@ -15,7 +15,7 @@ public class MainController {
 
         User user = (User) request.getSession().getAttribute("user");
         model.addAttribute("user", user);
-        model.addAttribute("title", "Welcome test title");
+
         return "/welcome";
     }
 }

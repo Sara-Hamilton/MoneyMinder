@@ -9,10 +9,6 @@
 
 <h1 th:text="${title}">Default Title</h1>
 
-<h1>Account index</h1>
-<p>this page should allow you to create and edit accounts</p>
-<h1 th:if="${session.user}" th:text="|Hello ${session.user.username}|">Default welcome</h1>
-
 <p th:unless="${userAccounts} and ${userAccounts.size()}">No accounts yet</p>
 
 <div class="well">
@@ -58,7 +54,7 @@
     </table>
 </div> -->
 
-
+<p th:if="${userAccounts} and ${userAccounts.size()}">Click account name to see transaction history.</p>
 <div class="table-responsive">
 <table th:if="${userAccounts} and ${userAccounts.size()}" class="table">
     <tr>

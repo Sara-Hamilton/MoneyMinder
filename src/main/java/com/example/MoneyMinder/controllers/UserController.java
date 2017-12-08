@@ -86,7 +86,7 @@ public class UserController {
             request.getSession().setAttribute("user", newUser);
             List<Account> userAccounts = accountDao.findByUserId(newUser.getId());
             model.addAttribute("userAccounts", userAccounts);
-            model.addAttribute("title", "Welcome test title - change me later");
+            model.addAttribute("title", "Hello " + newUser.getUsername());
 
             return "account/index";
         }
@@ -119,7 +119,7 @@ public class UserController {
 
                 model.addAttribute("userAccounts", userAccounts);
                 model.addAttribute("user", user);
-                model.addAttribute("title", "Welcome test title - change me later");
+                model.addAttribute("title", "Hello " + user.getUsername());
                 return "account/index";
 
         } else {
@@ -175,7 +175,7 @@ public class UserController {
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("user", user);
         model.addAttribute("hideMinAndGoal", user.isHideMinAndGoal());
-        model.addAttribute("title", "Welcome test title - change me later");
+        model.addAttribute("title", "Hello " + user.getUsername());
 
         return "account/index";
     }
