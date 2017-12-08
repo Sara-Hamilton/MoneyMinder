@@ -120,7 +120,7 @@ public class CategoryController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveCategoryForm(Model model, @RequestParam int categoryId) {
+    public String processRemoveCategoryForm(@RequestParam int categoryId) {
 
         Category category = categoryDao.findOne(categoryId);
         categoryDao.delete(category);

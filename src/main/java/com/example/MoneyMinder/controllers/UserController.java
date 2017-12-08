@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.List;
@@ -49,7 +48,7 @@ public class UserController {
 
     @RequestMapping(value = "register", method = RequestMethod.POST)
     public String add(@ModelAttribute @Valid User newUser, Errors errors, Model model, String password,
-                      String verifyPassword, HttpServletResponse response, HttpServletRequest request) {
+                      String verifyPassword, HttpServletRequest request) {
 
         String username = newUser.getUsername();
         String salt = HashPass.saltShaker();
@@ -100,7 +99,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(Model model, @RequestParam String username, @RequestParam String password, HttpServletResponse response, HttpServletRequest request) {
+    public String login(Model model, @RequestParam String username, @RequestParam String password, HttpServletRequest request) {
 
         Iterable<User> users = userDao.findAll();
 
@@ -150,7 +149,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    public String logout(Model model, HttpServletResponse response, HttpServletRequest request) {
+    public String logout(Model model, HttpServletRequest request) {
         model.addAttribute("title", "You have successfully logged out");
 
         //Remove user from session

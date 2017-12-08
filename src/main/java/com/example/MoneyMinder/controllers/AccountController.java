@@ -132,7 +132,7 @@ public class AccountController {
     }
 
     @RequestMapping(value = "remove", method = RequestMethod.POST)
-    public String processRemoveAccountForm(Model model, @RequestParam int accountId) {
+    public String processRemoveAccountForm(@RequestParam int accountId) {
 
         Account account = accountDao.findOne(accountId);
         accountDao.delete(account);
