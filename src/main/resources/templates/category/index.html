@@ -9,11 +9,11 @@
 <p th:unless="${userCategories} and ${userCategories.size()}">No categories yet</p>
 
 <div class="col-md-6">
-    <a th:href="@{'/category/add'}" class="btn btn-sm btn-primary">Add Category</a>
     <p></p>
     <div class="list-group" th:if="${userCategories}" th:each="category : ${userCategories}">
         <a class="list-group-item" th:href="@{'/category/edit/' + ${category.id}}" th:text="${category.name}">Menu</a>
     </div>
+    <a th:href="@{'/category/add'}" class="btn btn-sm btn-primary">Add Category</a>
 </div>
 
 </body>
