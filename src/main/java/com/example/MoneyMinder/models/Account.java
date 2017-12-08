@@ -13,11 +13,6 @@ import java.util.List;
 @Entity
 public class Account {
 
-    //@ManyToMany
-    //@JoinColumn(name = "account_id")
-    //private List<Transaction> transactions;
-
-
     @Id
     @GeneratedValue
     private int id;
@@ -42,19 +37,11 @@ public class Account {
     private BigDecimal goal;
 
     public Account(User user, String name){
-        // this();
         this.user = user;
         this.name = name;
-        //this.categories = categories;
     }
 
     public Account(){ }
-
-    /*
-    public void addItem(Transaction item) {transactions.add(item);}
-
-    public void removeItem(Transaction item) {transactions.remove(item);}
-    */
 
     public int getId() {
         return id;
@@ -99,8 +86,6 @@ public class Account {
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-    //public List<Transaction> transactions() { return transactions; }
-
 
     public List<Category> getCategories() {
         return categories;

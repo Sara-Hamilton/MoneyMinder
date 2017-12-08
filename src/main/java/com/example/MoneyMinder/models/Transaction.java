@@ -12,14 +12,6 @@ import java.util.Date;
 @Entity
 public class Transaction {
 
-    //@ManyToOne
-    //private Category category;
-
-    // TODO fix this
-    //@ManyToMany(mappedBy = "transactions")
-    //@JoinColumn(name = "transaction_id")
-    //private List<Account> accounts;
-
     @Id
     @GeneratedValue
     private Long id;
@@ -41,9 +33,8 @@ public class Transaction {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
 
-    @ManyToOne//(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "accountId")
-    // @NotNull
     private Account account;
 
     @ManyToOne
@@ -51,21 +42,6 @@ public class Transaction {
     private Category category;
 
     private String categoryName;
-
-    /*
-    @NotNull
-    private Account fromAccount;
-
-    @NotNull
-    private Account toAccount;
-
-
-    @NotNull
-    private Category fromCategory;
-
-    @NotNull
-    private Category toCategory;
-    */
 
     public Transaction(BigDecimal amount, Date date, Account account,
                        Category category, String description, User user){
@@ -105,45 +81,9 @@ public class Transaction {
         this.account = account;
     }
 
-
-    /* public Account getFromAccount() {
-        return fromAccount;
-    }
-
-    public void setFromAccount(Account fromAccount) {
-        this.fromAccount = fromAccount;
-    }
-
-    public Account getToAccount() {
-        return toAccount;
-    }
-
-    public void setToAccount(Account toAccount) {
-        this.toAccount = toAccount;
-    }
-    */
-
     public Category getCategory() { return category; }
 
     public void setCategory(Category category) { this.category = category; }
-
-    /*
-    public Category getFromCategory() {
-        return fromCategory;
-    }
-
-    public void setFromCategory(Category fromCategory) {
-        this.fromCategory = fromCategory;
-    }
-
-    public Category getToCategory() {
-        return toCategory;
-    }
-
-    public void setToCategory(Category toCategory) {
-        this.toCategory = toCategory;
-    }
-    */
 
     public User getUser() {
         return user;
@@ -180,8 +120,4 @@ public class Transaction {
     public void setPreviousTotal(BigDecimal previousTotal) {
         this.previousTotal = previousTotal;
     }
-
-    //public String getCategoryName() {return category.getName();}
-
-    //public List<Account> getAccounts() { return accounts; }
 }
