@@ -2,6 +2,7 @@ package com.example.MoneyMinder.controllers;
 
 import com.example.MoneyMinder.models.Account;
 import com.example.MoneyMinder.models.User;
+import com.example.MoneyMinder.models.converters.HashPass;
 import com.example.MoneyMinder.models.data.AccountDao;
 import com.example.MoneyMinder.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,10 +52,8 @@ public class UserController {
                       String verifyPassword, HttpServletResponse response, HttpServletRequest request) {
 
         String username = newUser.getUsername();
-
-        // TODO salt passwords
-        //String salt = HashPass.saltShaker();
-        //newUser.setSalt(salt);
+        String salt = HashPass.saltShaker();
+        newUser.setSalt(salt);
 
         // username must be unique
         // check to see if username is already taken
@@ -78,9 +77,8 @@ public class UserController {
             }
             return "user/register";
         } else {
-            // TODO hash password
             //hashes password before saving to User
-            //newUser.setPassword(HashPass.generateHash(salt + password));
+            newUser.setPassword(HashPass.generateHash(salt + password));
 
             newUser.setUserTotal(BigDecimal.valueOf(0.00));
             userDao.save(newUser);
@@ -107,13 +105,12 @@ public class UserController {
         Iterable<User> users = userDao.findAll();
 
         for (User user : users) {
-
-            // TODO salt and hash passwords
-            // String salt = user.getSalt();
-            // String enteredPassword = HashPass.generateHash(salt + password);
+            
+            String salt = user.getSalt();
+            String enteredPassword = HashPass.generateHash(salt + password);
 
             // verify username and password match username and password pair in the database
-            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(enteredPassword)) {
                 // add user to session
                 request.getSession().setAttribute("user", user);
                 // save data to database
@@ -139,6 +136,7 @@ public class UserController {
                 }
             }
             model.addAttribute("title", "Login");
+            model.addAttribute("username", username);
             model.addAttribute("passwordErrorMessage", "Invalid Password");
         }
         return "user/login";

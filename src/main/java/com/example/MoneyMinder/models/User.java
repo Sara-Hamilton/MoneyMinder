@@ -43,10 +43,13 @@ public class User {
     @Size(min=6, message="Passwords must be at least six characters.")
     private String password;
 
-    public User(String username, String email, String password) {
+    private String salt;
+
+    public User(String username, String email, String password, String salt) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.salt = salt;
     }
 
     public User() {}
@@ -74,6 +77,10 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getSalt() { return salt; }
+
+    public void setSalt(String salt) { this.salt = salt; }
 
     public int getId() { return id; }
 
