@@ -70,7 +70,7 @@
         </td>
         <td> <!-- account total -->
             <strong th:if="${{account.total}} >= 0" th:text="|$${#numbers.formatDecimal(account.total, 1, 'COMMA', 2, 'POINT')}|" ></strong>
-            <strong th:if="!(${{account.total}} >= 0)" th:text="|-$${#numbers.formatDecimal(-account.total, 1, 'COMMA', 2, 'POINT')}|"></strong>
+            <strong th:if="!(${{account.total}} >= 0)" th:text="|-$${#numbers.formatDecimal(-account.total, 1, 'COMMA', 2, 'POINT')}|" class="text-danger"></strong>
         </td>
         <td></td>
         <td> <!-- account minimum -->
