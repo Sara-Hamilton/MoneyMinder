@@ -1,9 +1,11 @@
 package com.example.MoneyMinder.controllers;
 
 import com.example.MoneyMinder.models.Account;
+import com.example.MoneyMinder.models.Category;
 import com.example.MoneyMinder.models.User;
 import com.example.MoneyMinder.models.converters.HashPass;
 import com.example.MoneyMinder.models.data.AccountDao;
+import com.example.MoneyMinder.models.data.CategoryDao;
 import com.example.MoneyMinder.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,9 @@ public class UserController {
 
     @Autowired
     private AccountDao accountDao;
+
+    @Autowired
+    private CategoryDao categoryDao;
 
     @RequestMapping(value = "")
     public String index(Model model) {
@@ -76,8 +81,73 @@ public class UserController {
             }
             return "user/register";
         } else {
-            //hashes password before saving to User
+            //hashes password before saving to user
             newUser.setPassword(HashPass.generateHash(salt + password));
+
+            userDao.save(newUser);
+
+            // create and save default categories
+            Category clothing = new Category("Clothing", newUser);
+            Category donations = new Category("Donations", newUser);
+            Category eatingOut = new Category("Eating Out", newUser);
+            Category entertainment = new Category("Entertainment", newUser);
+            Category gifts = new Category("Gifts", newUser);
+            Category groceries = new Category("Groceries", newUser);
+            Category health = new Category("Health", newUser);
+            Category home = new Category("Home", newUser);
+            Category kids = new Category("Kids", newUser);
+            Category personal = new Category("Personal", newUser);
+            Category pets = new Category("Pets", newUser);
+            Category transportation = new Category("Transportation", newUser);
+            Category utilities = new Category("Utilities", newUser);
+            Category vacation = new Category("Vacation", newUser);
+
+            /*
+            clothing.setName("Clothing");
+            donations.setName("Donations");
+            eatingOut.setName("Eating Out");
+            entertainment.setName("Entertainment");
+            gifts.setName("Gifts");
+            groceries.setName("Groceries");
+            health.setName("Health");
+            home.setName("Home");
+            kids.setName("Kids");
+            personal.setName("Personal");
+            pets.setName("Pets");
+            transportation.setName("Transportation");
+            utilities.setName("Utilities");
+            vacation.setName("Vacation");
+
+            clothing.setUser(newUser);
+            donations.setUser(newUser);
+            eatingOut.setUser(newUser);
+            entertainment.setUser(newUser);
+            gifts.setUser(newUser);
+            groceries.setUser(newUser);
+            health.setUser(newUser);
+            home.setUser(newUser);
+            kids.setUser(newUser);
+            personal.setUser(newUser);
+            pets.setUser(newUser);
+            transportation.setUser(newUser);
+            utilities.setUser(newUser);
+            vacation.setUser(newUser);
+            */
+
+            categoryDao.save(clothing);
+            categoryDao.save(donations);
+            categoryDao.save(eatingOut);
+            categoryDao.save(entertainment);
+            categoryDao.save(gifts);
+            categoryDao.save(groceries);
+            categoryDao.save(health);
+            categoryDao.save(home);
+            categoryDao.save(kids);
+            categoryDao.save(personal);
+            categoryDao.save(pets);
+            categoryDao.save(transportation);
+            categoryDao.save(utilities);
+            categoryDao.save(vacation);
 
             newUser.setUserTotal(BigDecimal.valueOf(0.00));
             userDao.save(newUser);

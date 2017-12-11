@@ -40,7 +40,7 @@ public class TransactionController {
     public String displayAddTransactionForm(Model model, HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
-        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
@@ -59,7 +59,7 @@ public class TransactionController {
         User user = (User) request.getSession().getAttribute("user");
 
         if (errors.hasErrors()) {
-            List<Category> userCategories = categoryDao.findByUserId(user.getId());
+            List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
             List<Account> userAccounts = accountDao.findByUserId(user.getId());
             model.addAttribute("userAccounts", userAccounts);
             model.addAttribute("userCategories", userCategories);
@@ -106,7 +106,7 @@ public class TransactionController {
     public String displayTransferForm(Model model, HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
-        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
@@ -124,7 +124,7 @@ public class TransactionController {
         User user = (User) request.getSession().getAttribute("user");
 
         if (errors.hasErrors()) {
-            List<Category> userCategories = categoryDao.findByUserId(user.getId());
+            List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
             List<Account> userAccounts = accountDao.findByUserId(user.getId());
             model.addAttribute("userAccounts", userAccounts);
             model.addAttribute("userCategories", userCategories);

@@ -33,7 +33,7 @@ public class CategoryController {
     public String index(Model model, HttpServletRequest request){
 
         User user = (User) request.getSession().getAttribute("user");
-        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute("title", user.getUsername() + "'s Categories");
@@ -45,7 +45,7 @@ public class CategoryController {
     public String displayAddCategoryForm(Model model,HttpServletRequest request) {
 
         User user = (User) request.getSession().getAttribute("user");
-        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         model.addAttribute("user", user);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute(new Category());
@@ -69,7 +69,7 @@ public class CategoryController {
         category.setUser(user);
         categoryDao.save(category);
         userDao.save(user);
-        List<Category> userCategories = categoryDao.findByUserId(user.getId());
+        List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         model.addAttribute("userCategories", userCategories);
 
         return "redirect:";

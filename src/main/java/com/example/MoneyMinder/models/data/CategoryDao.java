@@ -12,6 +12,6 @@ import java.util.List;
 @Transactional
 public interface CategoryDao extends CrudRepository<Category, Integer> {
 
-    List<Category> findByUserId (int user_id);
+    List<Category> findByUserIdOrderByNameAsc (int user_id);
 
 }
