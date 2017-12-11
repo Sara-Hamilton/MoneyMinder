@@ -84,6 +84,7 @@ public class UserController {
             //hashes password before saving to user
             newUser.setPassword(HashPass.generateHash(salt + password));
 
+            newUser.setUserTotal(BigDecimal.valueOf(0.00));
             userDao.save(newUser);
 
             // create and save default categories
@@ -96,43 +97,12 @@ public class UserController {
             Category health = new Category("Health", newUser);
             Category home = new Category("Home", newUser);
             Category kids = new Category("Kids", newUser);
+            Category other = new Category("Other", newUser);
             Category personal = new Category("Personal", newUser);
             Category pets = new Category("Pets", newUser);
             Category transportation = new Category("Transportation", newUser);
             Category utilities = new Category("Utilities", newUser);
             Category vacation = new Category("Vacation", newUser);
-
-            /*
-            clothing.setName("Clothing");
-            donations.setName("Donations");
-            eatingOut.setName("Eating Out");
-            entertainment.setName("Entertainment");
-            gifts.setName("Gifts");
-            groceries.setName("Groceries");
-            health.setName("Health");
-            home.setName("Home");
-            kids.setName("Kids");
-            personal.setName("Personal");
-            pets.setName("Pets");
-            transportation.setName("Transportation");
-            utilities.setName("Utilities");
-            vacation.setName("Vacation");
-
-            clothing.setUser(newUser);
-            donations.setUser(newUser);
-            eatingOut.setUser(newUser);
-            entertainment.setUser(newUser);
-            gifts.setUser(newUser);
-            groceries.setUser(newUser);
-            health.setUser(newUser);
-            home.setUser(newUser);
-            kids.setUser(newUser);
-            personal.setUser(newUser);
-            pets.setUser(newUser);
-            transportation.setUser(newUser);
-            utilities.setUser(newUser);
-            vacation.setUser(newUser);
-            */
 
             categoryDao.save(clothing);
             categoryDao.save(donations);
@@ -143,14 +113,12 @@ public class UserController {
             categoryDao.save(health);
             categoryDao.save(home);
             categoryDao.save(kids);
+            categoryDao.save(other);
             categoryDao.save(personal);
             categoryDao.save(pets);
             categoryDao.save(transportation);
             categoryDao.save(utilities);
             categoryDao.save(vacation);
-
-            newUser.setUserTotal(BigDecimal.valueOf(0.00));
-            userDao.save(newUser);
 
             model.addAttribute("user", newUser);
             request.getSession().setAttribute("user", newUser);
