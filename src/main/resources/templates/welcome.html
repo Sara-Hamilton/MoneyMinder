@@ -7,15 +7,24 @@
 
 <body class="container">
 
-<h1 th:text="${title}">Default Title</h1>
+<div class="container-fluid">
 
-<h1>Welcome to MoneyMinder:</h1>
-<h2>An app for people who want to sort and categorize their budget</h2>
-<h1 th:if="${session.user}" th:utext="|Welcome ${session.user.username}|"></h1>
+    <h1 th:text="${title}">Default Title</h1>
+    <h1 class="welcome">MoneyMinder</h1>
+    <h2 class="welcome2">Customize Your Budget</h2>
 
-<p th:if="${user}==null"><a href="user/register" class="btn btn-sm btn-primary">Register for a new account</a></p>
-<p th:if="${user}==null"><a href="user/login" class="btn btn-sm btn-primary">Login to an existing account</a></p>
+    <div class="grid-container">
+        <div><p>Create Accounts Set Goals</p></div>
+        <div><p>Unify data across accounts</p></div>
+        <div><p>Categorize and track your spending and your savings</p></div>
+        <div><p>Set aside funds for specific purposes</p></div>
+    </div>
 
+    <div class="welcome3">
+        <a th:if="${user}==null" href="user/register" class="btn btn-sm btn-primary">Register for a new account</a>
+        <a th:if="${user}==null" href="user/login" class="btn btn-sm btn-primary">Login to an existing account</a>
+    </div>
 
+</div>
 </body>
 </html>

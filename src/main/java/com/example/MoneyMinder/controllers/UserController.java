@@ -23,7 +23,6 @@ import java.util.List;
 
 @Controller
 @RequestMapping("user")
-//@SessionAttributes("username")
 public class UserController {
 
     @Autowired
@@ -34,15 +33,6 @@ public class UserController {
 
     @Autowired
     private CategoryDao categoryDao;
-
-    @RequestMapping(value = "")
-    public String index(Model model) {
-
-        // TODO change this - either get rid of it or have it direct to some sort of user page
-
-        model.addAttribute("title", "Welcome test title");
-        return "user/index";
-    }
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String add(Model model) {

@@ -81,6 +81,7 @@ public class CategoryController {
         Category category = categoryDao.findOne(categoryId);
         User user = (User) request.getSession().getAttribute("user");
 
+        // only categories that have not been transacted against may be deleted
         boolean usedCategory = false;
         List<Transaction> transactions = transactionDao.findByUserId(user.getId());
         for ( Transaction transaction : transactions) { if (transaction.getCategory() == category) {

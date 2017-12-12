@@ -4,8 +4,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
-
-
 //note below derived from https://dzone.com/articles/storing-passwords-java-web
 
 public class HashPass {

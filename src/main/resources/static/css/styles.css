@@ -38,3 +38,36 @@ input[type="number"] {
 .navbar-inverse .navbar-brand:hover, .navbar .nav > li > a:hover {
     color: silver;
 }
+
+.welcome {
+    color: #518989;
+    font-size: 500%;
+    text-align: center;
+    padding: 0.5em;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 15px;
+    margin: 50px 20px 100px 20px;
+    justify content: space-evenly;
+}
+
+.grid-container > div {
+    background-color: #518989;
+    opacity: 0.85;
+    text-align: center;
+    color: white;
+    padding: 20px 20px;
+    font-size: 24px;
+}
+
+.welcome2 {
+    font-size: 300%;
+    color: #4f5051;
+}
+
+.welcome2, .welcome3 {
+    text-align: center;
+}

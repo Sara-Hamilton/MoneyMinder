@@ -92,8 +92,7 @@ public class AccountController {
     public String displayAccountEditForm(Model model, @PathVariable int accountId) {
 
         Account account = accountDao.findOne(accountId);
-        BigDecimal x = BigDecimal.valueOf(0.00);
-        int balance = x.compareTo(account.getTotal());
+        BigDecimal balance = account.getTotal();
 
         model.addAttribute("account", accountDao.findOne(accountId));
         model.addAttribute("title", "Edit Account " + account.getName());
