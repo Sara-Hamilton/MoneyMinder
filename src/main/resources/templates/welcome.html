@@ -5,14 +5,15 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<body class="container">
+<body class="welcome-body">
 
-<div class="container-fluid">
-
-    <h1 th:text="${title}">Default Title</h1>
+<div class="welcome4">
     <h1 class="welcome">MoneyMinder</h1>
+</div>
+<div>
     <h2 class="welcome2">Customize Your Budget</h2>
-
+</div>
+<div class="container">
     <div class="grid-container">
         <div><p>Create Accounts Set Goals</p></div>
         <div><p>Unify data across accounts</p></div>
@@ -21,8 +22,8 @@
     </div>
 
     <div class="welcome3">
-        <a th:if="${user}==null" href="user/register" class="btn btn-sm btn-primary">Register for a new account</a>
-        <a th:if="${user}==null" href="user/login" class="btn btn-sm btn-primary">Login to an existing account</a>
+        <a th:if="${user}==null" href="user/register" class="welcome-link">Register for a new account</a>
+        <a th:if="${user}==null" href="user/login" class="welcome-link">Login to an existing account</a>
     </div>
 
 </div>

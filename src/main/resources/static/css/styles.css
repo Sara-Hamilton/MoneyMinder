@@ -3,6 +3,11 @@ body {
     color: #44444;
 }
 
+.welcome-body {
+    padding-top:3.5em;
+    color: #44444;
+}
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -39,19 +44,24 @@ input[type="number"] {
     color: silver;
 }
 
+.red {
+    color: #a03838;
+}
+
 .welcome {
-    color: #518989;
     font-size: 500%;
     text-align: center;
     padding: 0.5em;
+    color: white;
 }
 
 .grid-container {
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 15px;
-    margin: 50px 20px 100px 20px;
+    margin: 50px 20px 50px 20px;
     justify content: space-evenly;
+    padding: 5px;
 }
 
 .grid-container > div {
@@ -66,8 +76,35 @@ input[type="number"] {
 .welcome2 {
     font-size: 300%;
     color: #4f5051;
+    padding-top: 1em;
 }
 
 .welcome2, .welcome3 {
     text-align: center;
 }
+
+.welcome-link {
+    padding: 0.5em;
+    margin: 0 1em;
+    color: #518989;
+}
+
+.welcome-link:hover {
+    color: #4f5051;
+}
+
+.welcome4 {
+    background-color: #b5cccc;
+    padding: 1em 0;
+    border-bottom: 3px solid #518989;
+    font-family: 'Josefin Sans', sans-serif;
+    color: #4f5051;
+}
+
+.login-link {
+    padding: 2em 0;
+    margin: 0em;
+    color: #518989;
+    display: inline-block;
+}
+

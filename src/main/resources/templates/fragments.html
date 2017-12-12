@@ -3,11 +3,9 @@
 <head th:fragment="head">
     <meta charset="UTF-8"/>
 
-    <!-- <link rel="stylesheet" th:href="@{/css/styles.css}" />
-    <script type="text/javascript" th:src="@{/js/script.js}"></script> -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin+Sans:600" />
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
 
     <title th:text="${title}">MoneyMinder</title>
@@ -30,18 +28,11 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li th:if="${session.user}"><a th:href="@{/user/logout}">Logout</a></li>
+                        <li th:if="!${session.user}"><a th:href="@{/user/login}">Login</a></li>
                     </ul>
                 </div>
         </div>
     </div>
-
-<div th:fragment="javascript">
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-</div>
 
 </body>
 </html>
