@@ -1,6 +1,7 @@
 package com.example.MoneyMinder.controllers;
 
 import com.example.MoneyMinder.models.Account;
+import com.example.MoneyMinder.models.Transaction;
 import com.example.MoneyMinder.models.User;
 import com.example.MoneyMinder.models.data.AccountDao;
 import com.example.MoneyMinder.models.data.CategoryDao;
@@ -94,14 +95,23 @@ public class AccountController {
     }
 
     @RequestMapping(value = "edit/{accountId}", method = RequestMethod.GET)
-    public String displayAccountEditForm(Model model, @PathVariable int accountId) {
+    public String displayAccountEditForm(Model model, @PathVariable int accountId, HttpServletRequest request) {
 
         Account account = accountDao.findOne(accountId);
-        BigDecimal balance = account.getTotal();
+        User user = (User) request.getSession().getAttribute("user");
+
+        // only accounts that have not been transacted against may be deleted
+        boolean usedAccount = false;
+        List<Transaction> transactions = transactionDao.findByUserId(user.getId());
+        for (Transaction transaction : transactions) {
+            if (transaction.getAccount() == account) {
+                usedAccount = true;
+            }
+        }
 
         model.addAttribute("account", account);
+        model.addAttribute("usedAccount", usedAccount);
         model.addAttribute("title", "Edit Account " + account.getName());
-        model.addAttribute("balance", balance);
 
         return "account/edit";
     }
