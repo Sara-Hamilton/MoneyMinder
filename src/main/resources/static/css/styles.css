@@ -120,14 +120,15 @@ footer {
     display: block;
 }
 
+
 .disclaimer {
     color: #932435;
     display: block;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 50px;
     width: 40%;
     border: 3px solid #932435;
-    padding: 20px;
+    padding: 15px;
     text-align: center;
 }
 
