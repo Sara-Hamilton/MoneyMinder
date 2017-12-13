@@ -46,6 +46,7 @@ public class TransactionController {
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute("types", TransactionType.values());
@@ -112,6 +113,7 @@ public class TransactionController {
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute(new Transaction());
@@ -162,7 +164,6 @@ public class TransactionController {
         transactionDao.save(transaction);
         accountDao.save(fromAccount);
 
-
         //create a new transaction for deposit into toAccount
         Transaction toTransaction = new Transaction();
 
@@ -205,33 +206,31 @@ public class TransactionController {
     @RequestMapping(value = "view", method = RequestMethod.POST)
     public String diaplayCategoryAndAccountTransactions(Model model, int categoryId, int accountId, @DateTimeFormat(pattern = "yyyy-MM-dd")Date fromDate, @DateTimeFormat(pattern = "yyyy-MM-dd")Date toDate, HttpServletRequest request) {
 
-        Account account = accountDao.findOne(accountId);
         User user = (User) request.getSession().getAttribute("user");
 
         List<Transaction> userTransactions = transactionDao.findByUserId(user.getId());
-        List<Transaction> categoryTransactions = new ArrayList<>();
+        List<Transaction> filteredTransactions = new ArrayList<>();
         for ( Transaction transaction : userTransactions) {
             if ((categoryId != 0) && (accountId != 0)) {
                 if ((transaction.getCategory() == categoryDao.findOne(categoryId)) && (transaction.getAccount() == accountDao.findOne(accountId)) && (!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
-                    categoryTransactions.add(transaction); }
+                    filteredTransactions.add(transaction); }
             }
             else if ((categoryId != 0) && (accountId == 0)){
                     if ((transaction.getCategory() == categoryDao.findOne(categoryId)) && (!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
-                categoryTransactions.add(transaction);}
+                        filteredTransactions.add(transaction);}
             }
             else if ((categoryId == 0) && (accountId != 0)) {
                 if ((transaction.getAccount() == accountDao.findOne(accountId)) && (!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
-                    categoryTransactions.add(transaction); }
+                    filteredTransactions.add(transaction); }
             }
             else if ((categoryId == 0) && (accountId == 0)) {
                 if ((!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
-                    categoryTransactions.add(transaction); }
+                    filteredTransactions.add(transaction); }
             }
-
         }
 
         BigDecimal sum = new BigDecimal(0);
-        for (Transaction transaction : categoryTransactions){
+        for (Transaction transaction : filteredTransactions){
             if (transaction.getType() == TransactionType.DEPOSIT){
                 sum = sum.add(new BigDecimal(String.valueOf(transaction.getAmount())));}
             else if (transaction.getType() == TransactionType.WITHDRAWAL){
@@ -244,7 +243,7 @@ public class TransactionController {
         String ToDate = df.format(toDate);
 
         model.addAttribute("title", "Transactions Between " + FromDate + " and " + ToDate);
-        model.addAttribute("categoryTransactions", categoryTransactions);
+        model.addAttribute("filteredTransactions", filteredTransactions);
         model.addAttribute("sum", sum);
 
         return "transaction/view";

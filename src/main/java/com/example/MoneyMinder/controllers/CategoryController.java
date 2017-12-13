@@ -34,6 +34,7 @@ public class CategoryController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
+
         model.addAttribute("user", user);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute("title", user.getUsername() + "'s Categories");
@@ -46,6 +47,7 @@ public class CategoryController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
+
         model.addAttribute("user", user);
         model.addAttribute("userCategories", userCategories);
         model.addAttribute(new Category());
@@ -70,6 +72,7 @@ public class CategoryController {
         categoryDao.save(category);
         userDao.save(user);
         List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
+
         model.addAttribute("userCategories", userCategories);
 
         return "redirect:";
@@ -125,8 +128,7 @@ public class CategoryController {
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveCategoryForm(@RequestParam int categoryId) {
 
-        Category category = categoryDao.findOne(categoryId);
-        categoryDao.delete(category);
+        categoryDao.delete(categoryDao.findOne(categoryId));
 
         return "redirect:";
     }

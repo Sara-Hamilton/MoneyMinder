@@ -36,8 +36,10 @@ public class UserController {
 
     @RequestMapping(value = "register", method = RequestMethod.GET)
     public String add(Model model) {
+
         model.addAttribute("title", "Sign up for Money Minder");
         model.addAttribute(new User());
+
         return "user/register";
     }
 
@@ -75,6 +77,7 @@ public class UserController {
             newUser.setPassword(HashPass.generateHash(salt + password));
 
             newUser.setUserTotal(BigDecimal.valueOf(0.00));
+            // must save newUser before assigning categories belonging to newUser
             userDao.save(newUser);
 
             // create and save default categories
@@ -110,9 +113,12 @@ public class UserController {
             categoryDao.save(utilities);
             categoryDao.save(vacation);
 
-            model.addAttribute("user", newUser);
+            //add user to the session
             request.getSession().setAttribute("user", newUser);
+
             List<Account> userAccounts = accountDao.findByUserId(newUser.getId());
+
+            model.addAttribute("user", newUser);
             model.addAttribute("userAccounts", userAccounts);
             model.addAttribute("title", "Hello " + newUser.getUsername());
 
@@ -152,8 +158,8 @@ public class UserController {
 
         } else {
                 int userExists = 0;
-                for (User user1 : users)
-                    if ( user1.getUsername().equals(username)){
+                for (User aUser : users)
+                    if ( aUser.getUsername().equals(username)){
                         userExists += 1;
                     }
                 if (userExists == 0){
@@ -186,6 +192,7 @@ public class UserController {
         return "user/logout-confirmation";
     }
 
+    // provides user option to display or hide min and goal on account/index.html
     @RequestMapping(value = "/hideMinAndGoal", method = RequestMethod.GET)
     public String hideMinAndGoal(Model model, HttpServletRequest request) {
 
@@ -198,10 +205,10 @@ public class UserController {
 
         userDao.save(user);
 
-        model.addAttribute("user", user);
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
-        model.addAttribute("userAccounts", userAccounts);
+
         model.addAttribute("user", user);
+        model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("hideMinAndGoal", user.isHideMinAndGoal());
         model.addAttribute("title", "Hello " + user.getUsername());
 

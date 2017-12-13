@@ -39,9 +39,11 @@ public class AccountController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("user", user);
         model.addAttribute("title", "Hello " + user.getUsername());
+
         return "account/index";
     }
 
@@ -50,6 +52,7 @@ public class AccountController {
 
         User user = (User) request.getSession().getAttribute("user");
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
         model.addAttribute("user", user);
         model.addAttribute("userAccounts", userAccounts);
         model.addAttribute("title", "Create New Account");
@@ -74,7 +77,9 @@ public class AccountController {
         accountDao.save(account);
         userDao.save(user);
         List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
         model.addAttribute("userAccounts", userAccounts);
+
         return "account/index";
     }
 
@@ -94,7 +99,7 @@ public class AccountController {
         Account account = accountDao.findOne(accountId);
         BigDecimal balance = account.getTotal();
 
-        model.addAttribute("account", accountDao.findOne(accountId));
+        model.addAttribute("account", account);
         model.addAttribute("title", "Edit Account " + account.getName());
         model.addAttribute("balance", balance);
 
@@ -122,9 +127,7 @@ public class AccountController {
     @RequestMapping(value = "remove/{accountId}", method = RequestMethod.GET)
     public String displayRemoveAccountForm(Model model, @PathVariable int accountId) {
 
-        Account account = accountDao.findOne(accountId);
-
-        model.addAttribute("account", account);
+        model.addAttribute("account", accountDao.findOne(accountId));
         model.addAttribute("title", "Delete Account");
 
         return "account/remove";
@@ -133,8 +136,7 @@ public class AccountController {
     @RequestMapping(value = "remove", method = RequestMethod.POST)
     public String processRemoveAccountForm(@RequestParam int accountId) {
 
-        Account account = accountDao.findOne(accountId);
-        accountDao.delete(account);
+        accountDao.delete(accountDao.findOne(accountId));
 
         return "redirect:";
     }
