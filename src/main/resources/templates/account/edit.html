@@ -31,9 +31,9 @@
     </div>
 
     <input type="submit" class="btn btn-sm btn-primary" value="Submit" />
-    <span th:if="${balance} == 0"><a th:href="@{'/account/remove/' + ${account.id}}" class="btn btn-sm btn-danger" value="Delete Account" >Delete Account</a></span>
-    <span th:if="${balance} != 0"><a th:href="@{'/account/remove/' + ${account.id}}" class="btn btn-sm btn-danger disabled" value="Delete Account" >Delete Account</a></span>
-    <span th:if="${balance} != 0" class="text-muted">Only accounts with a balance of $0.00 may be deleted.</span>
+    <span th:if="${usedAccount} == false"><a th:href="@{'/account/remove/' + ${account.id}}" class="btn btn-sm btn-danger" value="Delete Account" >Delete Account</a></span>
+    <span th:if="${usedAccount} == true"><a th:href="@{'/account/remove/' + ${account.id}}" class="btn btn-sm btn-danger disabled" value="Delete Account" >Delete Account</a></span>
+    <span th:if="${usedAccount} == true" class="text-muted">Only accounts that are not tied to transactions may be deleted.</span>
 </form>
 
 </body>
