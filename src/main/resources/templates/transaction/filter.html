@@ -14,8 +14,19 @@
     <input type="hidden" th:object="${user}" th:value="${session.user.id}" name="userId" />
 
     <div class="form-group">
+        <label name="account">Account</label>
+        <select th:object="${account}" name="accountId">
+            <option value="0">All Accounts</option>
+            <option th:each="account : ${userAccounts}"
+                    th:text="${account.name}"
+                    th:value="${account.id}"></option>
+        </select>
+    </div>
+
+    <div class="form-group">
         <label name="categoryId">Category</label>
         <select th:object="${category}" name="categoryId">
+            <option value="0">All Categories</option>
             <option th:each="category : ${userCategories}"
                     th:text="${category.name}"
                     th:value="${category.id}"></option>

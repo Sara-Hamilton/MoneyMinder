@@ -14,13 +14,11 @@
 <p th:unless="${transactionList} and ${transactionList.size()}">No transactions yet</p>
 
 <p>
-    <a th:href="@{/transaction/add}" class="btn btn-sm btn-primary">Add transaction</a>
     <a th:href="@{'/account/edit/' + ${account.id}}" class="btn btn-sm btn-primary">Edit Account</a>
 </p>
 
 <table th:if="${transactionList} and ${transactionList.size()}" class="table table-striped table-bordered">
     <tr>
-        <!-- <th class="col-md-1">Id</th> -->
         <th class="col-md-1">Date</th>
         <th class="col-md-1">Type</th>
         <th class="col-md-4">Description</th>
@@ -29,8 +27,7 @@
         <th class="col-md-2">Account Total</th>
     </tr>
     <tr class="list-group" th:if="${transactionList}" th:each="transaction : ${transactionList}">
-        <!-- <td th:text="${{transaction.id}}"></td> -->
-        <td th:text="${{transaction.date}}"></td>
+        <td th:text="${#dates.format(transaction.date, 'MMM-dd-yyyy')}"></td>
         <td th:text="${{transaction.type}}"></td>
         <td th:text="${{transaction.description}}"></td>
         <td th:text="${{transaction.categoryName}}"><a class="list-group-item" th:text="${{transaction.categoryName}}"></a></td>

@@ -21,7 +21,6 @@
 
 <table th:if="${categoryTransactions} and ${categoryTransactions.size()}" class="table table-striped table-bordered">
     <tr>
-        <!-- <th class="col-md-1">Id</th> -->
         <th class="col-md-1">Date</th>
         <th class="col-md-1">Type</th>
         <th class="col-md-4">Description</th>
@@ -30,8 +29,7 @@
         <th class="col-md-2">Transaction Amount</th>
     </tr>
     <tr class="list-group" th:if="${categoryTransactions}" th:each="transaction : ${categoryTransactions}">
-        <!-- <td th:text="${{transaction.id}}"></td> -->
-        <td th:text="${{transaction.date}}"></td>
+        <td th:text="${#dates.format(transaction.date, 'MMM-dd-yyyy')}"></td>
         <td th:text="${{transaction.type}}"></td>
         <td th:text="${{transaction.description}}"></td>
         <td th:text="${{transaction.account.name}}"></td>

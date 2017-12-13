@@ -6,6 +6,7 @@ import com.example.MoneyMinder.models.data.CategoryDao;
 import com.example.MoneyMinder.models.data.TransactionDao;
 import com.example.MoneyMinder.models.data.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -181,5 +185,68 @@ public class TransactionController {
 
         model.addAttribute("title", "Transaction Successful");
         return "transaction/transaction-confirmation";
+    }
+
+    // ability to view transactions by category, account, and date range
+    @RequestMapping(value = "view", method = RequestMethod.GET)
+    public String displayCategoryAndAccountTransactionsForm(Model model, HttpServletRequest request) {
+
+        User user = (User) request.getSession().getAttribute("user");
+        List<Category> userCategories = categoryDao.findByUserIdOrderByNameAsc(user.getId());
+        List<Account> userAccounts = accountDao.findByUserId(user.getId());
+
+        model.addAttribute("title", "View Transactions By Account and Category");
+        model.addAttribute("userCategories", userCategories);
+        model.addAttribute("userAccounts", userAccounts);
+
+        return "transaction/filter";
+    }
+
+    @RequestMapping(value = "view", method = RequestMethod.POST)
+    public String diaplayCategoryAndAccountTransactions(Model model, int categoryId, int accountId, @DateTimeFormat(pattern = "yyyy-MM-dd")Date fromDate, @DateTimeFormat(pattern = "yyyy-MM-dd")Date toDate, HttpServletRequest request) {
+
+        Account account = accountDao.findOne(accountId);
+        User user = (User) request.getSession().getAttribute("user");
+
+        List<Transaction> userTransactions = transactionDao.findByUserId(user.getId());
+        List<Transaction> categoryTransactions = new ArrayList<>();
+        for ( Transaction transaction : userTransactions) {
+            if ((categoryId != 0) && (accountId != 0)) {
+                if ((transaction.getCategory() == categoryDao.findOne(categoryId)) && (transaction.getAccount() == accountDao.findOne(accountId)) && (!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
+                    categoryTransactions.add(transaction); }
+            }
+            else if ((categoryId != 0) && (accountId == 0)){
+                    if ((transaction.getCategory() == categoryDao.findOne(categoryId)) && (!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
+                categoryTransactions.add(transaction);}
+            }
+            else if ((categoryId == 0) && (accountId != 0)) {
+                if ((transaction.getAccount() == accountDao.findOne(accountId)) && (!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
+                    categoryTransactions.add(transaction); }
+            }
+            else if ((categoryId == 0) && (accountId == 0)) {
+                if ((!transaction.getDate().before(fromDate)) && (!transaction.getDate().after(toDate))) {
+                    categoryTransactions.add(transaction); }
+            }
+
+        }
+
+        BigDecimal sum = new BigDecimal(0);
+        for (Transaction transaction : categoryTransactions){
+            if (transaction.getType() == TransactionType.DEPOSIT){
+                sum = sum.add(new BigDecimal(String.valueOf(transaction.getAmount())));}
+            else if (transaction.getType() == TransactionType.WITHDRAWAL){
+                sum = sum.subtract(new BigDecimal(String.valueOf(transaction.getAmount())));
+            }
+        }
+
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+        String FromDate = df.format(fromDate);
+        String ToDate = df.format(toDate);
+
+        model.addAttribute("title", "Transactions Between " + FromDate + " and " + ToDate);
+        model.addAttribute("categoryTransactions", categoryTransactions);
+        model.addAttribute("sum", sum);
+
+        return "transaction/view";
     }
 }
