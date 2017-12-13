@@ -97,7 +97,7 @@ input[type="number"] {
     color: #518989;
 }
 
-.welcome-link:hover {
+.welcome-link:hover, a:hover {
     color: #4f5051;
 }
 
@@ -114,5 +114,9 @@ input[type="number"] {
     margin: 0em;
     color: #518989;
     display: inline-block;
+}
+
+footer {
+    display: block;
 }
 
